@@ -23,7 +23,7 @@ import 'moment/locale/en-gb';
 const App = () => {
   const theme: any = {
     ...DefaultTheme,
-    roundness: Mixins.scaleSize(10),
+    roundness: Mixins.scaleSize(4),
     colors: {
       ...DefaultTheme.colors,
       primary: Colors.PRIMARY,

@@ -1,14 +1,9 @@
-export const PRIMARY = '#5E738E';
-
-export const TEXT = {
-  primary: '#47576D',
-  secondary: '#A0A0A0',
-  darkBlue: '#5E738E',
-};
+export const PRIMARY = '#4F62C0';
+export const SECONDARY = '#F5F5F5';
 
 export const WHITE = '#FFFFFF';
-export const GREY = '#A0A0A0';
+export const BLACK = '#414141';
 
-export const SUCCESS = '#4FD79C';
+export const SUCCESS = '#20BA77';
 export const WARNING = '#EDA623';
-export const DANGER = '#FF8282';
+export const DANGER = '#F9496E';

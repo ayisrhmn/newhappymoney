@@ -1,11 +1,12 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
-import {useActions, useState} from '@overmind/index';
 import container from '@components/container';
-import {Mixins} from '@utils/index';
+import images from '@assets/images';
+
+import {screenStyles} from './styles';
+import {Colors} from '@utils/index';
 
 interface Props {
   navigation: any;
@@ -14,22 +15,25 @@ interface Props {
 const Layout = (props: Props) => {
   const {navigation} = props;
 
-  const {test} = useActions();
-  const {valTest} = useState();
+  const redirect = () => {
+    setTimeout(() => {
+      navigation.replace('SignIn');
+    }, 3000);
+  };
 
   React.useEffect(() => {
-    test();
+    redirect();
 
     return () => {};
-  }, []);
+  }, [navigation]);
 
   return (
-    <View style={{padding: Mixins.scaleSize(10)}}>
-      <Icon name="home" size={Mixins.scaleSize(30)} color="#414141" />
-      <Text>This is Splash screen!</Text>
-      <Text>Val Test: {valTest}</Text>
+    <View style={screenStyles.container}>
+      <Image source={images.cost} style={screenStyles.image} />
+      <Text style={screenStyles.maintitle}>HappyMoney</Text>
+      <Text style={screenStyles.subtitle}>Income & Expense Tracker</Text>
     </View>
   );
 };
 
-export default container(Layout, false);
+export default container(Layout, false, Colors.WHITE);

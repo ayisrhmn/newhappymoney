@@ -28,7 +28,11 @@ interface hocProps {
 }
 
 const container =
-  (Comp: any, isScrollView: boolean = true, bgColor: string = Colors.WHITE) =>
+  (
+    Comp: any,
+    isScrollView: boolean = true,
+    bgColor: string = Colors.SECONDARY,
+  ) =>
   (props: hocProps) => {
     const [isRefreshing, setIsRefreshing] = React.useState(false);
     const [callbacks, setClbks] = React.useState<iCallbackState[]>([]);
@@ -96,7 +100,10 @@ const container =
 
     return (
       <>
-        <StatusBar barStyle={'dark-content'} backgroundColor={Colors.WHITE} />
+        <StatusBar
+          barStyle={'dark-content'}
+          backgroundColor={Colors.SECONDARY}
+        />
         <SafeAreaView style={{flex: 1, backgroundColor: bgColor}}>
           {isScrollView && (
             <ContainerContext.Provider

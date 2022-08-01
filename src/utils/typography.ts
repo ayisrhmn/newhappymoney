@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 
 // font family
-export const FONT_FAMILY_REGULAR = 'Poppins-Regular';
-export const FONT_FAMILY_BOLD = 'Poppins-Bold';
+export const FONT_FAMILY_REGULAR = 'Lato-Regular';
+export const FONT_FAMILY_BOLD = 'Lato-Bold';
 
 // set custom fonts globally
 export const typography = () => {
