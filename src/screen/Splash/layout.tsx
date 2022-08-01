@@ -5,7 +5,7 @@ import {Text} from 'react-native-paper';
 
 import {useActions, useState} from '@overmind/index';
 import container from '@components/container';
-import {Mixins} from 'utils';
+import {Mixins} from '@utils/index';
 
 interface Props {
   navigation: any;

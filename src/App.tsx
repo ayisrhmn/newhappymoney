@@ -14,7 +14,7 @@ import {Provider as StoreProvider} from 'overmind-react';
 import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
 import {store} from '@overmind/index';
 
-import {Colors, Mixins} from '@utils/index';
+import {Colors, Mixins, Typography} from '@utils/index';
 import StackNavigation from '@navigations/stack-navigation';
 
 import moment from 'moment';
@@ -30,10 +30,15 @@ const App = () => {
     },
     fonts: {
       ...DefaultTheme.fonts,
+      regular: {
+        fontFamily: Typography.FONT_FAMILY_REGULAR,
+        fontWeight: 'normal',
+      },
     },
   };
 
   moment.locale('en');
+  Typography.typography();
 
   return (
     <StoreProvider value={store}>
