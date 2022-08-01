@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Appbar} from 'react-native-paper';
 
-import {Colors, Mixins} from '@utils/index';
+import {Colors, Mixins, Typography} from '@utils/index';
 
 interface Props {
   navigation?: any;
@@ -38,7 +38,7 @@ const Header = (props: Props) => {
 
   return (
     <Appbar.Header style={styles.headerContainer}>
-      {['Home'].indexOf(route.name) < 0 && (
+      {['SignIn', 'SignUp', 'Home'].indexOf(route.name) < 0 && (
         <Appbar.BackAction
           onPress={() => {
             if (['SignIn', 'SignUp'].indexOf(route.name) < 0) {
@@ -47,8 +47,8 @@ const Header = (props: Props) => {
               navigation.navigate('GetStarted');
             }
           }}
-          color={Colors.PRIMARY}
-          size={Mixins.scaleFont(28)}
+          color={Colors.BLACK}
+          size={Mixins.scaleFont(24)}
         />
       )}
       {left}
@@ -61,12 +61,11 @@ const Header = (props: Props) => {
 const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: Colors.WHITE,
-    height: Mixins.scaleSize(52),
   },
   headerText: {
-    fontSize: Mixins.scaleFont(20),
-    color: Colors.TEXT.primary,
-    marginLeft: Mixins.scaleSize(-10),
+    fontSize: Mixins.scaleFont(18),
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+    color: Colors.BLACK,
   },
 });
 
