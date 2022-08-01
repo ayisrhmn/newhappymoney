@@ -10,7 +10,9 @@
 
 import React from 'react';
 
+import {Provider as StoreProvider} from 'overmind-react';
 import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
+import {store} from '@overmind/index';
 
 import {Colors, Mixins} from '@utils/index';
 import StackNavigation from '@navigations/stack-navigation';
@@ -34,9 +36,11 @@ const App = () => {
   moment.locale('en');
 
   return (
-    <PaperProvider theme={theme}>
-      <StackNavigation />
-    </PaperProvider>
+    <StoreProvider value={store}>
+      <PaperProvider theme={theme}>
+        <StackNavigation />
+      </PaperProvider>
+    </StoreProvider>
   );
 };
 
