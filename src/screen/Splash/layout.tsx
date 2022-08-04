@@ -4,9 +4,10 @@ import {Text} from 'react-native-paper';
 
 import container from '@components/container';
 import images from '@assets/images';
+import {Colors} from '@utils/index';
+import {useActions} from '@overmind/index';
 
 import {screenStyles} from './styles';
-import {Colors} from '@utils/index';
 
 interface Props {
   navigation: any;
@@ -15,17 +16,25 @@ interface Props {
 const Layout = (props: Props) => {
   const {navigation} = props;
 
+  const {getApiTest} = useActions();
+
+  const [status, setStatus] = React.useState('');
+
   const redirect = () => {
-    setTimeout(() => {
-      navigation.replace('SignIn');
-    }, 3000);
+    getApiTest().then(res => setStatus(res));
+
+    if (status.length > 0) {
+      setTimeout(() => {
+        navigation.replace('SignIn');
+      }, 3000);
+    }
   };
 
   React.useEffect(() => {
     redirect();
 
     return () => {};
-  }, [navigation]);
+  }, [status]);
 
   return (
     <View style={screenStyles.container}>

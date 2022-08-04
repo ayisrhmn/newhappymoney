@@ -1,5 +1,11 @@
-import moment from 'moment';
+export const getApiTest = async (context: any) => {
+  let response = await context.effects.api.getApiTest();
 
-export const test = (context: any) => {
-  context.state.valTest = 'Overmind succesfull!';
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
 };

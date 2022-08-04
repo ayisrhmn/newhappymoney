@@ -5,7 +5,6 @@ import {Text} from 'react-native-paper';
 import container from '@components/container';
 import Input from '@components/input';
 import Button from '@components/button';
-import {Colors, Mixins} from '@utils/index';
 
 import {screenStyles} from './styles';
 

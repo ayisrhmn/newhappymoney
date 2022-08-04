@@ -12,6 +12,7 @@ import React from 'react';
 
 import {Provider as StoreProvider} from 'overmind-react';
 import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
+import FlashMessage from 'react-native-flash-message';
 import {store} from '@overmind/index';
 
 import {Colors, Mixins, Typography} from '@utils/index';
@@ -44,6 +45,7 @@ const App = () => {
     <StoreProvider value={store}>
       <PaperProvider theme={theme}>
         <StackNavigation />
+        <FlashMessage position="top" duration={3000} />
       </PaperProvider>
     </StoreProvider>
   );
