@@ -1,7 +1,7 @@
 type State = {
-  valTest: string;
+  token: string;
 };
 
 export const state: State = {
-  valTest: '',
+  token: '',
 };

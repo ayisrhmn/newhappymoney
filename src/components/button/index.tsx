@@ -6,6 +6,7 @@ import {Colors, Mixins, Typography} from '@utils/index';
 
 interface Props {
   children: any;
+  loading?: boolean;
   mode?: 'text' | 'outlined' | 'contained';
   dark?: boolean;
   disabled?: boolean;

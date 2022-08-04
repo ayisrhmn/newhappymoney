@@ -9,7 +9,7 @@ import Button from '@components/button';
 import {screenStyles} from './styles';
 
 interface Props {
-  navigation?: any;
+  navigation: any;
 }
 
 const Layout = (props: Props) => {
