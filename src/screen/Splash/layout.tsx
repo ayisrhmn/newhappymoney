@@ -50,7 +50,7 @@ const Layout = (props: Props) => {
         if (userToken === null) {
           navigation.replace('SignIn');
         } else {
-          navigation.replace('Home');
+          navigation.replace('MainNav');
         }
       }, 3000);
     }

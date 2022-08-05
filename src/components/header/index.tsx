@@ -38,7 +38,7 @@ const Header = (props: Props) => {
 
   return (
     <Appbar.Header style={styles.headerContainer}>
-      {['SignIn', 'SignUp', 'Home'].indexOf(route.name) < 0 && (
+      {['SignIn', 'SignUp'].indexOf(route.name) < 0 && (
         <Appbar.BackAction
           onPress={() => {
             if (['SignIn', 'SignUp'].indexOf(route.name) < 0) {

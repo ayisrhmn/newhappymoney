@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'transparent',
     fontSize: Mixins.scaleFont(14),
+    color: Colors.BLACK,
   },
   touchable: {
     position: 'absolute',

@@ -1,11 +1,15 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Text, ActivityIndicator} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
 
+import {useIsFocused} from '@react-navigation/native';
+import container from '@components/container';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useActions} from '@overmind/index';
-import {Colors, Mixins} from '@utils/index';
+import {Colors, Helper, Mixins} from '@utils/index';
+import {screenStyles} from './styles';
+import moment from 'moment';
 
 interface Props {
   navigation: any;
@@ -14,13 +18,24 @@ interface Props {
 const Layout = (props: Props) => {
   const {navigation} = props;
 
-  const {getMyProfile} = useActions();
+  const {getMyBalance} = useActions();
 
-  const [data, setData] = React.useState({}) as any;
+  const isFocused = useIsFocused();
+
+  const [loading, setLoading] = React.useState(false);
+  const [balance, setBalance] = React.useState(0);
 
   const initData = () => {
-    getMyProfile()
-      .then(res => setData(res))
+    setLoading(true);
+
+    let payload = {
+      TrDateMonth: moment().format('YYYY-MM'),
+    };
+    getMyBalance(payload)
+      .then(res => {
+        setBalance(res);
+        setLoading(false);
+      })
       .catch(err =>
         showMessage({
           type: 'danger',
@@ -30,33 +45,33 @@ const Layout = (props: Props) => {
   };
 
   React.useEffect(() => {
-    initData();
+    if (isFocused) {
+      initData();
+    }
 
     return () => {};
-  }, []);
-
-  const doLogout = async () => {
-    await AsyncStorage.removeItem('@user_token');
-    navigation.replace('Splash');
-    return;
-  };
+  }, [isFocused]);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Hello, {data.Email}</Text>
-      <TouchableOpacity onPress={doLogout}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: Colors.DANGER,
-            marginTop: Mixins.scaleSize(10),
-          }}
-        >
-          Logout
-        </Text>
-      </TouchableOpacity>
+    <View style={screenStyles.container}>
+      {loading && (
+        <ActivityIndicator
+          color={Colors.PRIMARY}
+          size="small"
+          style={screenStyles.loadingWrapper}
+        />
+      )}
+
+      {!loading && isFocused && (
+        <View style={screenStyles.balanceWrapper}>
+          <Text style={screenStyles.balanceValue}>
+            Rp {Helper.numberWithSeparator(balance)}
+          </Text>
+          <Text style={screenStyles.balanceLabel}>Total balance</Text>
+        </View>
+      )}
     </View>
   );
 };
 
-export default Layout;
+export default container(Layout);

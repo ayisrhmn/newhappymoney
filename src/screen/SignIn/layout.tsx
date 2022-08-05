@@ -59,7 +59,7 @@ const Layout = (props: Props) => {
                 token: Data,
               }),
             );
-            navigation.replace('Home');
+            navigation.replace('MainNav');
             return;
           }
         } catch (error) {

@@ -37,3 +37,15 @@ export const getMyProfile = async (context: any) => {
     return Data;
   }
 };
+
+export const getMyBalance = async (context: any, payload: object) => {
+  let response = await context.effects.api.getMyBalance(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
+};

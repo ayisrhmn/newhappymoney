@@ -13,4 +13,7 @@ export const api = {
   getMyProfile() {
     return http.post('/user/profile');
   },
+  getMyBalance(payload: any) {
+    return http.post('/transaction/balance', payload);
+  },
 };

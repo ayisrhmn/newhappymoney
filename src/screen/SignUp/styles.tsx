@@ -14,7 +14,10 @@ export const screenStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  text: {fontSize: Mixins.scaleFont(14)},
+  text: {
+    fontSize: Mixins.scaleFont(14),
+    color: Colors.BLACK,
+  },
   textLink: {
     fontSize: Mixins.scaleFont(14),
     fontWeight: 'bold',
