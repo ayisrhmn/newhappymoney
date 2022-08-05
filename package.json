@@ -27,6 +27,7 @@
     "overmind": "^28.0.1",
     "overmind-react": "^29.0.1",
     "react": "17.0.2",
+    "react-hook-form": "^7.34.0",
     "react-native": "0.67.4",
     "react-native-flash-message": "^0.3.1",
     "react-native-paper": "^4.12.4",

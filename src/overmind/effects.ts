@@ -7,6 +7,9 @@ export const api = {
   doSignIn(payload: any) {
     return http.post('/auth/signin', payload);
   },
+  doSignUp(payload: any) {
+    return http.post('/auth/signup', payload);
+  },
   getMyProfile() {
     return http.post('/user/profile');
   },

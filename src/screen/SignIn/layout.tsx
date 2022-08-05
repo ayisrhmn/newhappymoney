@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
+import {useForm} from 'react-hook-form';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useActions} from '@overmind/index';
@@ -20,20 +21,31 @@ const Layout = (props: Props) => {
 
   const {doSignIn, setToken} = useActions();
 
-  const [Email, setEmail] = React.useState(
-    __DEV__ ? 'testing@happymoney.com' : '',
-  );
-  const [Password, setPassword] = React.useState(__DEV__ ? 'testing123' : '');
   const [secure, setSecure] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
-  const funcDoSignIn = () => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: {errors},
+  } = useForm();
+
+  React.useEffect(() => {
+    register('Email', {required: 'This field is required'});
+    register('Password', {required: 'This field is required'});
+
+    return () => {};
+  }, [register]);
+
+  const funcDoSignIn = (val: any) => {
     setLoading(true);
 
-    doSignIn({
-      Email,
-      Password,
-    })
+    let payload = {
+      Email: val.Email,
+      Password: val.Password,
+    };
+    doSignIn(payload)
       .then(async res => {
         try {
           let {Success, Data} = res?.data;
@@ -57,28 +69,10 @@ const Layout = (props: Props) => {
       })
       .catch(err => {
         setLoading(false);
-
-        if (Email === '' && Password === '') {
-          showMessage({
-            message: 'Please, fill this form',
-            type: 'danger',
-          });
-        } else if (Email === '') {
-          showMessage({
-            message: 'Please, fill your email',
-            type: 'danger',
-          });
-        } else if (Password === '') {
-          showMessage({
-            message: 'Please, fill your password',
-            type: 'danger',
-          });
-        } else {
-          showMessage({
-            message: err.response.data.Message,
-            type: 'danger',
-          });
-        }
+        showMessage({
+          message: err.response.data.Message,
+          type: 'danger',
+        });
       });
   };
 
@@ -87,21 +81,25 @@ const Layout = (props: Props) => {
       <Input
         mode="flat"
         type="text"
-        label={'Email'}
-        value={Email}
-        onChangeText={val => setEmail(val)}
+        label="Email"
+        onChangeText={val => setValue('Email', val, {shouldValidate: true})}
+        error={errors.Email}
       />
       <Input
         mode="flat"
         type="password"
-        label={'Password'}
+        label="Password"
         secureTextEntry={secure}
         onSecure={() => setSecure(!secure)}
-        value={Password}
-        onChangeText={val => setPassword(val)}
+        onChangeText={val => setValue('Password', val, {shouldValidate: true})}
+        error={errors.Password}
       />
       <View style={screenStyles.actions}>
-        <Button mode="contained" loading={loading} onPress={funcDoSignIn}>
+        <Button
+          mode="contained"
+          loading={loading}
+          onPress={() => handleSubmit(funcDoSignIn)()}
+        >
           Sign In
         </Button>
 

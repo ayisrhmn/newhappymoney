@@ -16,6 +16,12 @@ export const doSignIn = async (context: any, payload: object) => {
   return response;
 };
 
+export const doSignUp = async (context: any, payload: object) => {
+  let response = await context.effects.api.doSignUp(payload);
+
+  return response;
+};
+
 export const setToken = (context: any, token: string) => {
   context.state.token = token;
 };
