@@ -49,3 +49,73 @@ export const getMyBalance = async (context: any, payload: object) => {
     return Data;
   }
 };
+
+export const getMySpendingReport = async (context: any, payload: object) => {
+  let response = await context.effects.api.getMySpendingReport(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    Data;
+  }
+
+  return response;
+};
+
+export const getTopIncome = async (context: any, payload: object) => {
+  let response = await context.effects.api.getTopIncome(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    Data;
+  }
+
+  return response;
+};
+
+export const getTopExpense = async (context: any, payload: object) => {
+  let response = await context.effects.api.getTopExpense(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    Data;
+  }
+
+  return response;
+};
+
+export const getReachedLimit = async (context: any, payload: object) => {
+  let response = await context.effects.api.getReachedLimit(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
+};
+
+export const setCloseReachedLimit = (context: any, close: boolean) => {
+  context.state.closeReachedLimit = close;
+};
+
+export const getMyTransactions = async (context: any, payload: object) => {
+  let response = await context.effects.api.getMyTransactions(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
+};

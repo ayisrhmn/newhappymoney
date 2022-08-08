@@ -19,7 +19,7 @@ interface Props {
 const Layout = (props: Props) => {
   const {navigation} = props;
 
-  const {doSignIn, setToken} = useActions();
+  const {doSignIn, setToken, setCloseReachedLimit} = useActions();
 
   const [secure, setSecure] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
@@ -59,6 +59,7 @@ const Layout = (props: Props) => {
                 token: Data,
               }),
             );
+            setCloseReachedLimit(false);
             navigation.replace('MainNav');
             return;
           }

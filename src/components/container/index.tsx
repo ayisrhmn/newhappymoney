@@ -5,6 +5,7 @@ import {
   ScrollView,
   RefreshControl,
 } from 'react-native';
+
 import {Colors} from '@utils/index';
 
 interface iCallbackState {
