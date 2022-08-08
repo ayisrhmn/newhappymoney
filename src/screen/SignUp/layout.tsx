@@ -33,6 +33,7 @@ const Layout = (props: Props) => {
   React.useEffect(() => {
     register('Email', {required: 'This field is required'});
     register('Password', {required: 'This field is required'});
+    register('ConfirmPswd', {required: 'This field is required'});
 
     return () => {};
   }, [register]);
@@ -44,30 +45,38 @@ const Layout = (props: Props) => {
       Email: val.Email,
       Password: val.Password,
     };
-    doSignUp(payload)
-      .then(async res => {
-        try {
-          let {Success} = res?.data;
-          if (Success) {
-            showMessage({
-              type: 'success',
-              message: 'Success | Sign in first to your account',
-            });
-            navigation.navigate('SignIn');
-            return;
+    if (val.Password === val.ConfirmPswd) {
+      doSignUp(payload)
+        .then(async res => {
+          try {
+            let {Success} = res?.data;
+            if (Success) {
+              showMessage({
+                type: 'success',
+                message: 'Success | Sign in first to your account',
+              });
+              navigation.navigate('SignIn');
+              return;
+            }
+          } catch (error) {
+            console.log(res);
           }
-        } catch (error) {
-          console.log(res);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        setLoading(false);
-        showMessage({
-          message: err.response.data.Message,
-          type: 'danger',
+          setLoading(false);
+        })
+        .catch(err => {
+          setLoading(false);
+          showMessage({
+            message: err.response.data.Message,
+            type: 'danger',
+          });
         });
+    } else {
+      setLoading(false);
+      showMessage({
+        message: 'Your confirm password is wrong',
+        type: 'danger',
       });
+    }
   };
 
   return (
@@ -87,6 +96,17 @@ const Layout = (props: Props) => {
         onSecure={() => setSecure(!secure)}
         onChangeText={val => setValue('Password', val, {shouldValidate: true})}
         error={errors.Password}
+      />
+      <Input
+        mode="flat"
+        type="password"
+        label="Confirm Password"
+        secureTextEntry={secure}
+        onSecure={() => setSecure(!secure)}
+        onChangeText={val =>
+          setValue('ConfirmPswd', val, {shouldValidate: true})
+        }
+        error={errors.ConfirmPswd}
       />
       <View style={screenStyles.actions}>
         <Button
