@@ -33,10 +33,10 @@ const Layout = (props: Props) => {
       .then(res => {
         setData(res);
       })
-      .catch(err =>
+      .catch(() =>
         showMessage({
           type: 'danger',
-          message: err.response.data.Message,
+          message: 'Failed load data profile',
         }),
       );
   };

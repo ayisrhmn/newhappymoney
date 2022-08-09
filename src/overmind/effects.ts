@@ -31,4 +31,13 @@ export const api = {
   getMyTransactions(payload: any) {
     return http.post('/transaction', payload);
   },
+  getMyCategory() {
+    return http.post('/category');
+  },
+  onCreateCategory(payload: any) {
+    return http.post('/category/create', payload);
+  },
+  onDeleteCategory(payload: any) {
+    return http.post('/category/delete', payload);
+  },
 };

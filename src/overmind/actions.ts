@@ -119,3 +119,27 @@ export const getMyTransactions = async (context: any, payload: object) => {
     return Data;
   }
 };
+
+export const getMyCategory = async (context: any) => {
+  let response = await context.effects.api.getMyCategory();
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
+};
+
+export const onCreateCategory = async (context: any, payload: object) => {
+  let response = await context.effects.api.onCreateCategory(payload);
+
+  return response;
+};
+
+export const onDeleteCategory = async (context: any, payload: object) => {
+  let response = await context.effects.api.onDeleteCategory(payload);
+
+  return response;
+};

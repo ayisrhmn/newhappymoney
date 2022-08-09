@@ -64,7 +64,7 @@ export const screenStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: Mixins.scaleSize(14),
+    marginBottom: Mixins.scaleSize(16),
   },
   rowCategory: {
     flexDirection: 'row',
@@ -72,11 +72,6 @@ export const screenStyles = StyleSheet.create({
   },
   categoryContent: {
     marginLeft: Mixins.scaleSize(10),
-  },
-  iconCategory: {
-    paddingVertical: Mixins.scaleSize(9),
-    paddingHorizontal: Mixins.scaleSize(11),
-    borderRadius: Mixins.scaleSize(100),
   },
   categoryLabel: {
     fontSize: Mixins.scaleFont(14),

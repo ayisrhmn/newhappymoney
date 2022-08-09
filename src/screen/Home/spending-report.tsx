@@ -2,11 +2,11 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {ActivityIndicator, Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useIsFocused} from '@react-navigation/native';
 import {ContainerContext} from '@components/container';
 import ProgressChart from '@components/progress-chart';
+import IconCategory from '@components/icon-category';
 import {useActions} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
@@ -76,7 +76,7 @@ const Layout = (props: Props) => {
       .catch(() =>
         showMessage({
           type: 'danger',
-          message: 'Error load report resources',
+          message: 'Error load data report',
         }),
       );
   };
@@ -206,21 +206,11 @@ const Top3List = ({data, type, loading, isFocused}: any) => {
             return (
               <View style={screenStyles.itemList} key={i}>
                 <View style={screenStyles.rowCategory}>
-                  <View
-                    style={[
-                      screenStyles.iconCategory,
-                      {
-                        backgroundColor:
-                          type === 'income' ? Colors.SUCCESS : Colors.DANGER,
-                      },
-                    ]}
-                  >
-                    <Icon
-                      name="briefcase-outline"
-                      color={Colors.WHITE}
-                      size={Mixins.scaleFont(17)}
-                    />
-                  </View>
+                  <IconCategory
+                    backgroundColor={
+                      type === 'income' ? Colors.SUCCESS : Colors.DANGER
+                    }
+                  />
                   <View style={screenStyles.categoryContent}>
                     <Text style={screenStyles.categoryLabel}>
                       {item.Category}

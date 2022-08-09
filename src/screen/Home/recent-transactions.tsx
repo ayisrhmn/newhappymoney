@@ -40,10 +40,10 @@ const Layout = (props: Props) => {
         setData(res);
         setLoading(false);
       })
-      .catch(err =>
+      .catch(() =>
         showMessage({
           type: 'danger',
-          message: err.response.data.Message,
+          message: 'Failed load data transactions',
         }),
       );
   };

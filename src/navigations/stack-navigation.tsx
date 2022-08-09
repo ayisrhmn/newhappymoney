@@ -11,6 +11,8 @@ import SignUp from '@screen/SignUp';
 
 import MainNav from '@navigations/main-navigation';
 
+import CategoryForm from '@screen/CategoryForm';
+
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
@@ -50,6 +52,7 @@ const StackNavigation = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen name="CategoryForm" component={CategoryForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );

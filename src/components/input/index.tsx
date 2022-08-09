@@ -1,5 +1,10 @@
 import React from 'react';
-import {GestureResponderEvent, View, StyleSheet} from 'react-native';
+import {
+  GestureResponderEvent,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 
 import {Colors, Mixins} from '@utils/index';
@@ -15,7 +20,7 @@ interface Props {
   value?: any;
   error?: any;
   secureTextEntry?: boolean;
-  type?: 'text' | 'password' | 'select' | 'date';
+  type?: 'text' | 'password' | 'button';
   multiline?: boolean;
   mask?: any;
   keyboardType?: any | 'default';
@@ -43,6 +48,13 @@ const Input = (props: Props) => {
 
       {type === 'password' && (
         <InputPassword {...props} focus={focus} setFocus={setFocus} />
+      )}
+
+      {type === 'button' && (
+        <>
+          <TouchableOpacity onPress={props?.onPress} style={styles.touchable} />
+          <InputText {...props} focus={focus} setFocus={setFocus} />
+        </>
       )}
 
       {error && <Text style={styles.errorLabel}>{error.message}</Text>}
