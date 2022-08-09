@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View, Linking} from 'react-native';
-import {Text, ActivityIndicator} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {showMessage} from 'react-native-flash-message';
 
@@ -26,15 +26,12 @@ const Layout = (props: Props) => {
   const isFocused = useIsFocused();
 
   const [data, setData] = React.useState({}) as any;
-  const [loading, setLoading] = React.useState(false);
   const [waiting, setWaiting] = React.useState(false);
 
   const initData = () => {
-    setLoading(true);
     getMyProfile()
       .then(res => {
         setData(res);
-        setLoading(false);
       })
       .catch(err =>
         showMessage({
@@ -66,23 +63,11 @@ const Layout = (props: Props) => {
   return (
     <View style={screenStyles.container}>
       <View style={screenStyles.header}>
-        {loading && (
-          <ActivityIndicator
-            color={Colors.PRIMARY}
-            size="small"
-            style={screenStyles.loadingWrapper}
-          />
-        )}
-
-        {!loading && isFocused && (
-          <>
-            {data.Email && <Avatar initialName={data.Email} />}
-            <Text style={screenStyles.username}>
-              {data.Email?.substring(0, indexDomainEmail)}
-            </Text>
-            <Text style={screenStyles.email}>{data.Email}</Text>
-          </>
-        )}
+        {data.Email && <Avatar initialName={data.Email} />}
+        <Text style={screenStyles.username}>
+          {data.Email?.substring(0, indexDomainEmail)}
+        </Text>
+        <Text style={screenStyles.email}>{data.Email}</Text>
       </View>
 
       <View style={screenStyles.actions}>

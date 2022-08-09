@@ -115,8 +115,8 @@ export const screenStyles = StyleSheet.create({
   },
 
   recentTr: {
-    marginTop: Mixins.scaleSize(18),
-    marginBottom: Mixins.scaleSize(10),
+    marginTop: Mixins.scaleSize(16),
+    marginBottom: Mixins.scaleSize(6),
   },
   trList: {
     flexDirection: 'row',

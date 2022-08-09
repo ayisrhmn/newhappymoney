@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {ActivityIndicator, Text} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -25,11 +25,10 @@ const Layout = (props: Props) => {
 
   const isFocused = useIsFocused();
 
-  const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]) as any;
 
   const initData = () => {
-    setLoading(true);
+    setData([]);
 
     let payload = {
       TrDateMonth: moment().format('YYYY-MM'),
@@ -37,7 +36,6 @@ const Layout = (props: Props) => {
     getReachedLimit(payload)
       .then(res => {
         setData(res);
-        setLoading(false);
       })
       .catch(err =>
         showMessage({
@@ -60,7 +58,7 @@ const Layout = (props: Props) => {
       style={[
         screenStyles.card,
         {
-          marginBottom: Mixins.scaleSize(16),
+          marginBottom: Mixins.scaleSize(18),
           display: closeReachedLimit
             ? 'none'
             : data.length === 0
@@ -75,36 +73,23 @@ const Layout = (props: Props) => {
           <Icon name="close" color={Colors.GREY} size={Mixins.scaleFont(17)} />
         </TouchableOpacity>
       </View>
-      <View style={{marginBottom: Mixins.scaleSize(8)}}>
-        {loading && (
-          <ActivityIndicator
-            color={Colors.PRIMARY}
-            size="small"
-            style={{marginBottom: Mixins.scaleSize(10)}}
-          />
-        )}
-        {!loading && isFocused && (
-          <>
-            {data?.map((item: any, i: number) => (
-              <View style={screenStyles.listReached} key={i}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={screenStyles.categoryLabel}>{i + 1}. </Text>
-                  <View>
-                    <Text style={screenStyles.categoryLabel}>
-                      {item.Category}
-                    </Text>
-                    <Text style={screenStyles.amountTopLabel}>
-                      Limit: Rp {Helper.numberWithSeparator(item.Limit)}
-                    </Text>
-                  </View>
-                </View>
-                <Text style={screenStyles.amountReached}>
-                  Rp {Helper.numberWithSeparator(item.Total)}
+      <View style={{marginBottom: Mixins.scaleSize(6)}}>
+        {data?.map((item: any, i: number) => (
+          <View style={screenStyles.listReached} key={i}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={screenStyles.categoryLabel}>{i + 1}. </Text>
+              <View>
+                <Text style={screenStyles.categoryLabel}>{item.Category}</Text>
+                <Text style={screenStyles.amountTopLabel}>
+                  Limit: Rp {Helper.numberWithSeparator(item.Limit)}
                 </Text>
               </View>
-            ))}
-          </>
-        )}
+            </View>
+            <Text style={screenStyles.amountReached}>
+              Rp {Helper.numberWithSeparator(item.Total)}
+            </Text>
+          </View>
+        ))}
       </View>
     </View>
   );

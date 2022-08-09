@@ -89,8 +89,12 @@ const Layout = (props: Props) => {
     return () => {};
   }, [isFocused, ctx.isRefreshing]);
 
-  const percentIn = spending.PercentageIn * 100;
-  const percentEx = spending.PercentageEx * 100;
+  const percentIn = isNaN(spending.PercentageIn * 100)
+    ? 0
+    : spending.PercentageIn * 100;
+  const percentEx = isNaN(spending.PercentageEx * 100)
+    ? 0
+    : spending.PercentageEx * 100;
 
   return (
     <View style={screenStyles.sectionContainer}>
@@ -114,14 +118,11 @@ const Layout = (props: Props) => {
         </View>
 
         <View style={screenStyles.progressWrapper}>
-          {loading && <ActivityIndicator size="small" color={Colors.PRIMARY} />}
-          {!loading && isFocused && (
-            <ProgressChart
-              percentIn={isNaN(percentIn) ? 0 : percentIn}
-              percentEx={isNaN(percentEx) ? 0 : percentEx}
-              fixedNum={true}
-            />
-          )}
+          <ProgressChart
+            percentIn={!loading && isFocused ? percentIn : 0}
+            percentEx={!loading && isFocused ? percentEx : 0}
+            fixedNum={true}
+          />
         </View>
 
         {topIncome?.length !== 0 && (
@@ -175,7 +176,13 @@ const TotalAmountReport = ({income, expense, loading, isFocused}: any) => {
 
 const Top3List = ({data, type, loading, isFocused}: any) => {
   return (
-    <View style={screenStyles.topWrapper}>
+    <View
+      style={
+        type === 'income'
+          ? screenStyles.topWrapper
+          : {marginBottom: Mixins.scaleSize(10)}
+      }
+    >
       <Text
         style={{
           ...screenStyles.title,
