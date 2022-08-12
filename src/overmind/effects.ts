@@ -37,6 +37,9 @@ export const api = {
   onCreateCategory(payload: any) {
     return http.post('/category/create', payload);
   },
+  onEditCategory(payload: any) {
+    return http.post('/category/edit', payload);
+  },
   onDeleteCategory(payload: any) {
     return http.post('/category/delete', payload);
   },

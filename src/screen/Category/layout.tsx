@@ -63,6 +63,56 @@ const Layout = (props: Props) => {
     });
   };
 
+  const onNavigateEdit = (item: any) => {
+    const {Name, Type} = item;
+
+    let payload = {
+      TrDateMonth: '',
+      Show: '',
+    };
+    if (Type === 'Income') {
+      getTopIncome(payload).then(res => {
+        let {Success, Data} = res.data;
+        if (Success) {
+          let checkData = Data.find((o: any) => o.Category === Name);
+          if (checkData === undefined) {
+            navigation.navigate('CategoryForm', {
+              isEdit: true,
+              onTransaction: false,
+              item,
+            });
+          } else {
+            navigation.navigate('CategoryForm', {
+              isEdit: true,
+              onTransaction: true,
+              item,
+            });
+          }
+        }
+      });
+    } else {
+      getTopExpense(payload).then(res => {
+        let {Success, Data} = res.data;
+        if (Success) {
+          let checkData = Data.find((o: any) => o.Category === Name);
+          if (checkData === undefined) {
+            navigation.navigate('CategoryForm', {
+              isEdit: true,
+              onTransaction: false,
+              item,
+            });
+          } else {
+            navigation.navigate('CategoryForm', {
+              isEdit: true,
+              onTransaction: true,
+              item,
+            });
+          }
+        }
+      });
+    }
+  };
+
   const onDelete = (item: any) => {
     const {_id, Name, Type} = item;
 
@@ -171,12 +221,14 @@ const Layout = (props: Props) => {
                   <ListContent
                     title="Income"
                     data={dataFilterByType(data, 'Income')}
+                    onNavigateEdit={onNavigateEdit}
                     setVisible={setVisible}
                     setSelected={setSelected}
                   />
                   <ListContent
                     title="Expense"
                     data={dataFilterByType(data, 'Expense')}
+                    onNavigateEdit={onNavigateEdit}
                     setVisible={setVisible}
                     setSelected={setSelected}
                   />
@@ -207,7 +259,13 @@ const Layout = (props: Props) => {
   );
 };
 
-const ListContent = ({title, data, setVisible, setSelected}: any) => {
+const ListContent = ({
+  title,
+  data,
+  setVisible,
+  setSelected,
+  onNavigateEdit,
+}: any) => {
   return (
     <View style={{marginBottom: title === 'Income' ? Mixins.scaleSize(14) : 0}}>
       <Text style={screenStyles.typeTitle}>{title}</Text>
@@ -223,15 +281,17 @@ const ListContent = ({title, data, setVisible, setSelected}: any) => {
             </View>
             <View>
               <Text style={screenStyles.category}>{item.Name}</Text>
-              {item.Limit !== 0 && (
+              {item.Type === 'Expense' && (
                 <Text style={screenStyles.limit}>
-                  Limit: Rp {Helper.numberWithSeparator(item.Limit)}
+                  {item.Limit === 0
+                    ? 'No limit'
+                    : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
                 </Text>
               )}
             </View>
           </View>
           <View style={screenStyles.row}>
-            <TouchableOpacity onPress={() => console.log('edit pressed!')}>
+            <TouchableOpacity onPress={() => onNavigateEdit(item)}>
               <Icon
                 name="pencil-outline"
                 color={Colors.GREY}

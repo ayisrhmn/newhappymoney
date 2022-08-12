@@ -6,6 +6,9 @@ export const screenStyles = StyleSheet.create({
     paddingVertical: Mixins.scaleSize(10),
     paddingHorizontal: Mixins.scaleSize(18),
   },
+  row: {
+    flexDirection: 'row',
+  },
   modalContainer: {
     padding: Mixins.scaleSize(16),
   },
@@ -31,5 +34,11 @@ export const screenStyles = StyleSheet.create({
     fontSize: Mixins.scaleFont(14),
     fontWeight: 'bold',
     color: Colors.PRIMARY,
+  },
+  textRadio: {
+    fontSize: Mixins.scaleFont(14),
+    textAlignVertical: 'center',
+    color: Colors.BLACK,
+    marginRight: Mixins.scaleSize(24),
   },
 });

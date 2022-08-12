@@ -138,6 +138,12 @@ export const onCreateCategory = async (context: any, payload: object) => {
   return response;
 };
 
+export const onEditCategory = async (context: any, payload: object) => {
+  let response = await context.effects.api.onEditCategory(payload);
+
+  return response;
+};
+
 export const onDeleteCategory = async (context: any, payload: object) => {
   let response = await context.effects.api.onDeleteCategory(payload);
 
