@@ -27,7 +27,10 @@ export const screenStyles = StyleSheet.create({
   },
   listSection: {
     backgroundColor: Colors.WHITE,
-    paddingVertical: Mixins.scaleSize(14),
+    marginBottom: Mixins.scaleSize(64),
+  },
+  itemList: {
+    paddingVertical: Mixins.scaleSize(8),
     paddingHorizontal: Mixins.scaleSize(18),
   },
   typeTitle: {
@@ -94,7 +97,7 @@ export const screenStyles = StyleSheet.create({
     color: Colors.GREY,
   },
   noDataWrapper: {
-    paddingVertical: Mixins.scaleSize(16),
+    paddingVertical: Mixins.scaleSize(34),
   },
   noDataText: {
     fontSize: Mixins.scaleFont(14),

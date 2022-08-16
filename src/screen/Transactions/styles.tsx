@@ -46,7 +46,7 @@ export const screenStyles = StyleSheet.create({
     paddingHorizontal: Mixins.scaleSize(18),
   },
   noDataWrapper: {
-    paddingVertical: Mixins.scaleSize(16),
+    paddingVertical: Mixins.scaleSize(34),
   },
   noDataText: {
     fontSize: Mixins.scaleFont(14),

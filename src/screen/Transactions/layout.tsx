@@ -5,7 +5,7 @@ import {showMessage} from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useIsFocused} from '@react-navigation/native';
-import container, {ContainerContext} from '@components/container';
+import container from '@components/container';
 import Modal from '@components/modal';
 import {useActions} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
@@ -23,8 +23,6 @@ interface Props {
 
 const Layout = (props: Props) => {
   const {navigation} = props;
-
-  const ctx = React.useContext(ContainerContext);
 
   const {getMyTransactions, getMyCategory, onDeleteTransaction} = useActions();
 
@@ -83,12 +81,12 @@ const Layout = (props: Props) => {
   };
 
   React.useEffect(() => {
-    if (isFocused || (isFocused && ctx.isRefreshing)) {
+    if (isFocused) {
       initData();
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing, payload]);
+  }, [isFocused, payload]);
 
   const getCategoryName = (_id: any) => {
     let ct = category.find((o: any) => {
@@ -301,7 +299,7 @@ const ListTransactions = ({data, initData, setDetail, setOpenDetail}: any) => {
       onRefresh={() => initData()}
       data={data}
       showsVerticalScrollIndicator={false}
-      keyExtractor={(item: any, i: number) => `${item._id}_${i}`}
+      keyExtractor={(item: any) => `${item._id}`}
       renderItem={({item, index}) => (
         <View
           style={

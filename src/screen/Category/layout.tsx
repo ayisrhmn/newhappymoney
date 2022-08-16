@@ -1,10 +1,10 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {RefreshControl, ScrollView, TouchableOpacity, View} from 'react-native';
 import {Text, ActivityIndicator} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
 
 import {useIsFocused} from '@react-navigation/native';
-import container, {ContainerContext} from '@components/container';
+import container from '@components/container';
 import IconCategory from '@components/icon-category';
 import {useActions} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
@@ -19,8 +19,6 @@ interface Props {
 
 const Layout = (props: Props) => {
   const {navigation} = props;
-
-  const ctx = React.useContext(ContainerContext);
 
   const {getMyCategory, onDeleteCategory, getTopIncome, getTopExpense} =
     useActions();
@@ -52,12 +50,12 @@ const Layout = (props: Props) => {
   };
 
   React.useEffect(() => {
-    if (isFocused || (isFocused && ctx.isRefreshing)) {
+    if (isFocused) {
       initData();
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing]);
+  }, [isFocused]);
 
   const dataFilterByType = (data: any, type: string) => {
     return data?.filter((o: any) => {
@@ -213,13 +211,20 @@ const Layout = (props: Props) => {
             <ActivityIndicator
               color={Colors.PRIMARY}
               size="small"
-              style={{marginVertical: Mixins.scaleSize(20)}}
+              style={{marginVertical: Mixins.scaleSize(34)}}
             />
           )}
           {!loading && isFocused && (
             <>
               {data.length !== 0 ? (
-                <>
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={false}
+                      onRefresh={() => initData()}
+                    />
+                  }
+                >
                   <ListContent
                     title="Income"
                     data={dataFilterByType(data, 'Income')}
@@ -232,7 +237,7 @@ const Layout = (props: Props) => {
                     setOpenModalDetail={setOpenModalDetail}
                     setSelected={setSelected}
                   />
-                </>
+                </ScrollView>
               ) : (
                 <View style={screenStyles.noDataWrapper}>
                   <Text style={screenStyles.noDataText}>
@@ -272,41 +277,49 @@ const Layout = (props: Props) => {
 
 const ListContent = ({title, data, setOpenModalDetail, setSelected}: any) => {
   return (
-    <View style={{marginBottom: title === 'Income' ? Mixins.scaleSize(14) : 0}}>
-      <Text style={screenStyles.typeTitle}>{title}</Text>
-      {data?.map((item: any, i: number) => (
-        <View style={screenStyles.listItem} key={i}>
-          <TouchableOpacity
-            onPress={() => {
-              setOpenModalDetail(true);
-              setSelected(item);
-            }}
-            style={{flex: 1}}
-          >
-            <View style={[screenStyles.row, {alignItems: 'center'}]}>
-              <View style={screenStyles.iconWrap}>
-                <IconCategory
-                  backgroundColor={
-                    item.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
-                  }
-                />
+    <View
+      style={
+        title === 'Income'
+          ? {marginTop: Mixins.scaleSize(8), marginBottom: Mixins.scaleSize(4)}
+          : {marginBottom: Mixins.scaleSize(4)}
+      }
+    >
+      <View style={screenStyles.itemList}>
+        <Text style={screenStyles.typeTitle}>{title}</Text>
+        {data?.map((item: any, i: number) => (
+          <View style={screenStyles.listItem} key={i}>
+            <TouchableOpacity
+              onPress={() => {
+                setOpenModalDetail(true);
+                setSelected(item);
+              }}
+              style={{flex: 1}}
+            >
+              <View style={[screenStyles.row, {alignItems: 'center'}]}>
+                <View style={screenStyles.iconWrap}>
+                  <IconCategory
+                    backgroundColor={
+                      item.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
+                    }
+                  />
+                </View>
+                <View>
+                  <Text style={screenStyles.category}>{item.Name}</Text>
+                  {item.Type === 'Expense' && (
+                    <Text style={screenStyles.limit}>
+                      {item.Limit === 0
+                        ? 'No limit'
+                        : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
+                    </Text>
+                  )}
+                </View>
               </View>
-              <View>
-                <Text style={screenStyles.category}>{item.Name}</Text>
-                {item.Type === 'Expense' && (
-                  <Text style={screenStyles.limit}>
-                    {item.Limit === 0
-                      ? 'No limit'
-                      : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
-                  </Text>
-                )}
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ))}
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
     </View>
   );
 };
 
-export default container(Layout);
+export default container(Layout, false);
