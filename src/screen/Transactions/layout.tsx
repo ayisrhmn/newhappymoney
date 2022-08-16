@@ -493,33 +493,13 @@ const ModalContentFilter = ({
             </View>
           </TouchableOpacity>
           {category
-            .filter((o: any) => o.Type === 'Income')
-            .map((item: any, i: number) => (
-              <TouchableOpacity
-                onPress={() => setFilter({...filter, Category: item._id})}
-                key={i}
-              >
-                <View
-                  style={
-                    filter?.Category === item._id
-                      ? [screenStyles.btnFilter, screenStyles.btnFilterSelected]
-                      : screenStyles.btnFilter
-                  }
-                >
-                  <Text
-                    style={
-                      filter?.Category === item._id
-                        ? {...screenStyles.txtFilter, color: Colors.WHITE}
-                        : {...screenStyles.txtFilter}
-                    }
-                  >
-                    {item.Name}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          {category
-            .filter((o: any) => o.Type === 'Expense')
+            .filter((o: any) =>
+              filter?.Type !== '' ? o?.Type === filter?.Type : o?.Type,
+            )
+            .sort((a: any, b: any) => {
+              let dataSort = ['Income', 'Expense'];
+              return dataSort?.indexOf(a?.Type) - dataSort?.indexOf(b?.Type);
+            })
             .map((item: any, i: number) => (
               <TouchableOpacity
                 onPress={() => setFilter({...filter, Category: item._id})}

@@ -44,7 +44,6 @@ export const screenStyles = StyleSheet.create({
   itemList: {
     paddingVertical: Mixins.scaleSize(8),
     paddingHorizontal: Mixins.scaleSize(18),
-    marginBottom: Mixins.scaleSize(4),
   },
   noDataWrapper: {
     paddingVertical: Mixins.scaleSize(16),
