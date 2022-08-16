@@ -13,3 +13,4 @@ declare module 'react-native-vector-icons/EvilIcons';
 declare module 'react-native-vector-icons/Fontisto';
 declare module 'react-native-vector-icons/Foundation';
 declare module 'react-native-vector-icons/Zocial';
+declare module 'react-native-modern-datepicker';

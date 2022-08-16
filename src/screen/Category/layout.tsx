@@ -247,7 +247,6 @@ const Layout = (props: Props) => {
 
       <ModalDetail
         visible={openModalDetail}
-        loading={false}
         item={selected}
         onClose={() => setOpenModalDetail(false)}
         onPressEdit={() => {

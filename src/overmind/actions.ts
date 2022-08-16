@@ -120,6 +120,12 @@ export const getMyTransactions = async (context: any, payload: object) => {
   }
 };
 
+export const onDeleteTransaction = async (context: any, payload: object) => {
+  let response = await context.effects.api.onDeleteTransaction(payload);
+
+  return response;
+};
+
 export const getMyCategory = async (context: any) => {
   let response = await context.effects.api.getMyCategory();
 

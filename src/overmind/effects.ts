@@ -31,6 +31,9 @@ export const api = {
   getMyTransactions(payload: any) {
     return http.post('/transaction', payload);
   },
+  onDeleteTransaction(payload: any) {
+    return http.post('/transaction/delete', payload);
+  },
   getMyCategory() {
     return http.post('/category');
   },

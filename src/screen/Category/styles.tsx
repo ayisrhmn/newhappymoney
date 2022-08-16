@@ -60,6 +60,7 @@ export const screenStyles = StyleSheet.create({
   modalTitle: {
     fontSize: Mixins.scaleFont(14),
     color: Colors.BLACK,
+    width: '90%',
   },
   modalCtTitle: {
     fontSize: Mixins.scaleFont(16),

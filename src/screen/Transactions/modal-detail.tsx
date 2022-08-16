@@ -3,10 +3,11 @@ import {TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
 import Modal from '@components/modal';
-import IconCategory from '@components/icon-category';
 import {Colors, Helper, Mixins} from '@utils/index';
 
 import {screenStyles} from './styles';
+
+import moment from 'moment';
 
 interface Props {
   visible: boolean;
@@ -26,32 +27,41 @@ const ModalDetail = (props: Props) => {
     >
       <View style={screenStyles.modalContainer}>
         <Text style={{...screenStyles.modalTitle, fontWeight: 'bold'}}>
-          {props?.item?.Type} category
+          Detail transaction
         </Text>
         <View
           style={[
-            screenStyles.row,
-            {alignItems: 'center', marginTop: Mixins.scaleSize(20)},
+            screenStyles.itemList,
+            {
+              paddingHorizontal: 0,
+              marginBottom: 0,
+              marginTop: Mixins.scaleSize(14),
+            },
           ]}
         >
-          <View style={screenStyles.iconWrap}>
-            <IconCategory
-              backgroundColor={
-                props?.item?.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
-              }
-            />
-          </View>
-          <View>
-            <Text style={screenStyles.category}>{props?.item?.Name}</Text>
-            {props?.item?.Type === 'Expense' && (
-              <Text style={screenStyles.limit}>
-                {props?.item?.Limit === 0
-                  ? 'No limit'
-                  : `Limit: Rp ${Helper.numberWithSeparator(
-                      props?.item?.Limit,
-                    )}`}
+          <View style={screenStyles.trList}>
+            <View>
+              <Text style={screenStyles.categoryLabel}>
+                {props?.item?.Title}
               </Text>
-            )}
+              <Text style={screenStyles.categoryTrLabel}>
+                {props?.item?.Category?.Name}
+              </Text>
+              <Text style={screenStyles.trDateLabel}>
+                {moment(props?.item?.TrDate).format('DD MMMM YYYY')}
+              </Text>
+            </View>
+            <Text
+              style={{
+                ...screenStyles.amountTr,
+                color:
+                  props?.item?.Category?.Type === 'Income'
+                    ? Colors.SUCCESS
+                    : Colors.DANGER,
+              }}
+            >
+              Rp {Helper.numberWithSeparator(props?.item?.Amount)}
+            </Text>
           </View>
         </View>
         <View style={screenStyles.actions}>
