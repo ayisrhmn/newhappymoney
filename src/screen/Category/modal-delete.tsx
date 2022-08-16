@@ -11,7 +11,7 @@ interface Props {
   loading: boolean;
   onClose: Function | any;
   category: string;
-  onDelete: Function | any;
+  onPressDelete: Function | any;
 }
 
 const ModalDelete = (props: Props) => {
@@ -30,7 +30,7 @@ const ModalDelete = (props: Props) => {
         </Text>
         <View style={screenStyles.actions}>
           <View style={screenStyles.row}>
-            <TouchableOpacity onPress={props?.onDelete}>
+            <TouchableOpacity onPress={props?.onPressDelete}>
               <Text style={screenStyles.actYes}>Yes</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={props?.onClose}>

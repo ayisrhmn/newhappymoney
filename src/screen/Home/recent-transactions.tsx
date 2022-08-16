@@ -103,16 +103,14 @@ const RecentTransaction = ({data, loading, isFocused}: any) => {
           {data?.map((item: any, i: number) => {
             return (
               <View style={screenStyles.trList} key={i}>
-                <View style={screenStyles.rowCategory}>
-                  <View>
-                    <Text style={screenStyles.categoryLabel}>{item.Title}</Text>
-                    <Text style={screenStyles.categoryTrLabel}>
-                      {item.Category?.Name}
-                    </Text>
-                    <Text style={screenStyles.trDateLabel}>
-                      {moment(item.TrDate).format('DD MMMM YYYY')}
-                    </Text>
-                  </View>
+                <View>
+                  <Text style={screenStyles.categoryLabel}>{item.Title}</Text>
+                  <Text style={screenStyles.categoryTrLabel}>
+                    {item.Category?.Name}
+                  </Text>
+                  <Text style={screenStyles.trDateLabel}>
+                    {moment(item.TrDate).format('DD MMMM YYYY')}
+                  </Text>
                 </View>
                 <Text
                   style={{

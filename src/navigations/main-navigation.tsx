@@ -1,5 +1,5 @@
 import React from 'react';
-import {BackHandler, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -20,17 +20,7 @@ const MainNavigation = (props: Props) => {
   const {navigation} = props;
 
   React.useEffect(() => {
-    const backAction = () => {
-      BackHandler.exitApp();
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
+    return () => {};
   }, [navigation]);
 
   return (

@@ -41,4 +41,9 @@ export const screenStyles = StyleSheet.create({
     color: Colors.BLACK,
     marginRight: Mixins.scaleSize(24),
   },
+  labelOnTr: {
+    fontSize: Mixins.scaleFont(11),
+    fontWeight: 'bold',
+    color: Colors.DANGER,
+  },
 });

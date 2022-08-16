@@ -12,6 +12,7 @@ import {Colors, Helper, Mixins} from '@utils/index';
 
 import {screenStyles} from './styles';
 import ModalDelete from './modal-delete';
+import ModalDetail from './modal-detail';
 
 interface Props {
   navigation: any;
@@ -30,10 +31,12 @@ const Layout = (props: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]) as any;
   const [selected, setSelected] = React.useState({}) as any;
-  const [visible, setVisible] = React.useState(false);
+  const [openModalDetail, setOpenModalDetail] = React.useState(false);
+  const [openModalDelete, setOpenModalDelete] = React.useState(false);
   const [delLoading, setDelLoading] = React.useState(false);
 
   const initData = () => {
+    setSelected({});
     setLoading(true);
 
     getMyCategory()
@@ -134,7 +137,7 @@ const Layout = (props: Props) => {
 
                 if (Success) {
                   setDelLoading(false);
-                  setVisible(false);
+                  setOpenModalDelete(false);
                   showMessage({
                     type: 'success',
                     message: Message,
@@ -150,7 +153,7 @@ const Layout = (props: Props) => {
               );
           } else {
             setDelLoading(false);
-            setVisible(false);
+            setOpenModalDelete(false);
             showMessage({
               type: 'danger',
               message: 'Failed to delete, this category used in transaction',
@@ -170,7 +173,7 @@ const Layout = (props: Props) => {
 
                 if (Success) {
                   setDelLoading(false);
-                  setVisible(false);
+                  setOpenModalDelete(false);
                   showMessage({
                     type: 'success',
                     message: Message,
@@ -186,7 +189,7 @@ const Layout = (props: Props) => {
               );
           } else {
             setDelLoading(false);
-            setVisible(false);
+            setOpenModalDelete(false);
             showMessage({
               type: 'danger',
               message: 'Failed to delete, this category used in transaction',
@@ -221,15 +224,13 @@ const Layout = (props: Props) => {
                   <ListContent
                     title="Income"
                     data={dataFilterByType(data, 'Income')}
-                    onNavigateEdit={onNavigateEdit}
-                    setVisible={setVisible}
+                    setOpenModalDetail={setOpenModalDetail}
                     setSelected={setSelected}
                   />
                   <ListContent
                     title="Expense"
                     data={dataFilterByType(data, 'Expense')}
-                    onNavigateEdit={onNavigateEdit}
-                    setVisible={setVisible}
+                    setOpenModalDetail={setOpenModalDetail}
                     setSelected={setSelected}
                   />
                 </>
@@ -245,73 +246,65 @@ const Layout = (props: Props) => {
         </View>
       </View>
 
+      <ModalDetail
+        visible={openModalDetail}
+        loading={false}
+        item={selected}
+        onClose={() => setOpenModalDetail(false)}
+        onPressEdit={() => {
+          onNavigateEdit(selected);
+          setOpenModalDetail(false);
+        }}
+        onPressDelete={() => {
+          setOpenModalDetail(false);
+          setOpenModalDelete(true);
+        }}
+      />
+
       <ModalDelete
-        visible={visible}
+        visible={openModalDelete}
         loading={delLoading}
         category={selected?.Name}
-        onClose={() => {
-          setSelected({});
-          setVisible(false);
-        }}
-        onDelete={() => onDelete(selected)}
+        onClose={() => setOpenModalDelete(false)}
+        onPressDelete={() => onDelete(selected)}
       />
     </>
   );
 };
 
-const ListContent = ({
-  title,
-  data,
-  setVisible,
-  setSelected,
-  onNavigateEdit,
-}: any) => {
+const ListContent = ({title, data, setOpenModalDetail, setSelected}: any) => {
   return (
     <View style={{marginBottom: title === 'Income' ? Mixins.scaleSize(14) : 0}}>
       <Text style={screenStyles.typeTitle}>{title}</Text>
       {data?.map((item: any, i: number) => (
         <View style={screenStyles.listItem} key={i}>
-          <View style={[screenStyles.row, {alignItems: 'center'}]}>
-            <View style={screenStyles.iconWrap}>
-              <IconCategory
-                backgroundColor={
-                  item.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
-                }
-              />
+          <TouchableOpacity
+            onPress={() => {
+              setOpenModalDetail(true);
+              setSelected(item);
+            }}
+            style={{flex: 1}}
+          >
+            <View style={[screenStyles.row, {alignItems: 'center'}]}>
+              <View style={screenStyles.iconWrap}>
+                <IconCategory
+                  backgroundColor={
+                    item.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
+                  }
+                />
+              </View>
+              <View>
+                <Text style={screenStyles.category}>{item.Name}</Text>
+                {item.Type === 'Expense' && (
+                  <Text style={screenStyles.limit}>
+                    {item.Limit === 0
+                      ? 'No limit'
+                      : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
+                  </Text>
+                )}
+              </View>
             </View>
-            <View>
-              <Text style={screenStyles.category}>{item.Name}</Text>
-              {item.Type === 'Expense' && (
-                <Text style={screenStyles.limit}>
-                  {item.Limit === 0
-                    ? 'No limit'
-                    : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
-                </Text>
-              )}
-            </View>
-          </View>
-          <View style={screenStyles.row}>
-            <TouchableOpacity onPress={() => onNavigateEdit(item)}>
-              <Icon
-                name="pencil-outline"
-                color={Colors.GREY}
-                size={Mixins.scaleFont(18)}
-                style={{marginRight: Mixins.scaleSize(10)}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setSelected(item);
-                setVisible(true);
-              }}
-            >
-              <Icon
-                name="trash-outline"
-                color={Colors.DANGER}
-                size={Mixins.scaleFont(18)}
-              />
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
       ))}
     </View>

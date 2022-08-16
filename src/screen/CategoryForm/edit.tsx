@@ -172,6 +172,11 @@ const EditForm = (props: Props) => {
           defaultValue={Limit}
         />
       )}
+      {params?.onTransaction && (
+        <Text style={screenStyles.labelOnTr}>
+          *Can't change type category, this category used in transaction
+        </Text>
+      )}
     </>
   );
 };

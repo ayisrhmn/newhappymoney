@@ -68,7 +68,18 @@ export const screenStyles = StyleSheet.create({
   },
   actions: {
     alignItems: 'flex-end',
-    marginTop: Mixins.scaleSize(32),
+    marginTop: Mixins.scaleSize(24),
+  },
+  actEdit: {
+    fontSize: Mixins.scaleFont(14),
+    fontWeight: 'bold',
+    color: Colors.PRIMARY,
+    marginRight: Mixins.scaleSize(14),
+  },
+  actDelete: {
+    fontSize: Mixins.scaleFont(14),
+    fontWeight: 'bold',
+    color: Colors.DANGER,
   },
   actYes: {
     fontSize: Mixins.scaleFont(14),
@@ -79,7 +90,7 @@ export const screenStyles = StyleSheet.create({
   actNo: {
     fontSize: Mixins.scaleFont(14),
     fontWeight: 'bold',
-    color: Colors.BLACK,
+    color: Colors.GREY,
   },
   noDataWrapper: {
     paddingVertical: Mixins.scaleSize(16),
