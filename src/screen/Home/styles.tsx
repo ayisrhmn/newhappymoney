@@ -88,7 +88,7 @@ export const screenStyles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   topWrapper: {
-    marginBottom: Mixins.scaleSize(20),
+    marginBottom: Mixins.scaleSize(14),
   },
 
   titleReached: {

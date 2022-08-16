@@ -8,12 +8,10 @@
  * @format
  */
 
-import 'react-native-gesture-handler';
 import React from 'react';
 
 import {Provider as StoreProvider} from 'overmind-react';
 import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FlashMessage from 'react-native-flash-message';
 import {store} from '@overmind/index';
 
@@ -44,14 +42,12 @@ const App = () => {
   Typography.typography();
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <StoreProvider value={store}>
-        <PaperProvider theme={theme}>
-          <StackNavigation />
-          <FlashMessage position="top" duration={3000} />
-        </PaperProvider>
-      </StoreProvider>
-    </GestureHandlerRootView>
+    <StoreProvider value={store}>
+      <PaperProvider theme={theme}>
+        <StackNavigation />
+        <FlashMessage position="top" duration={3000} />
+      </PaperProvider>
+    </StoreProvider>
   );
 };
 
