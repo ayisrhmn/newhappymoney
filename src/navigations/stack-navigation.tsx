@@ -12,6 +12,7 @@ import SignUp from '@screen/SignUp';
 import MainNav from '@navigations/main-navigation';
 
 import CategoryForm from '@screen/CategoryForm';
+import TransactionForm from '@screen/TransactionForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +54,7 @@ const StackNavigation = () => {
           }}
         />
         <Stack.Screen name="CategoryForm" component={CategoryForm} />
+        <Stack.Screen name="TransactionForm" component={TransactionForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );

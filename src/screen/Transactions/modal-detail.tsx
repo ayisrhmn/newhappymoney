@@ -64,6 +64,11 @@ const ModalDetail = (props: Props) => {
             </Text>
           </View>
         </View>
+        {props?.item?.Note !== '' && (
+          <View style={{marginTop: Mixins.scaleSize(8)}}>
+            <Text style={screenStyles.textNote}>Note: {props?.item?.Note}</Text>
+          </View>
+        )}
         <View style={screenStyles.actions}>
           <View style={screenStyles.row}>
             <TouchableOpacity onPress={props?.onPressEdit}>

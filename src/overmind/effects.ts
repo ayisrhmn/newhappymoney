@@ -31,6 +31,12 @@ export const api = {
   getMyTransactions(payload: any) {
     return http.post('/transaction', payload);
   },
+  onCreateTransaction(payload: any) {
+    return http.post('/transaction/create', payload);
+  },
+  onEditTransaction(payload: any) {
+    return http.post('/transaction/edit', payload);
+  },
   onDeleteTransaction(payload: any) {
     return http.post('/transaction/delete', payload);
   },

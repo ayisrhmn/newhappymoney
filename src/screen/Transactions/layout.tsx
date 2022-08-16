@@ -128,7 +128,9 @@ const Layout = (props: Props) => {
       <View style={screenStyles.container}>
         <View style={screenStyles.headerTitle}>
           <Text style={screenStyles.mainTitle}>List transactions</Text>
-          <TouchableOpacity onPress={() => console.log('pressed')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('TransactionForm')}
+          >
             <Text style={screenStyles.linkTitle}>Add transaction</Text>
           </TouchableOpacity>
         </View>
@@ -175,16 +177,26 @@ const Layout = (props: Props) => {
             <ActivityIndicator
               color={Colors.PRIMARY}
               size="small"
-              style={{marginVertical: Mixins.scaleSize(20)}}
+              style={{marginVertical: Mixins.scaleSize(34)}}
             />
           )}
           {!loading && isFocused && (
-            <ListTransactions
-              data={data}
-              initData={initData}
-              setDetail={setDetail}
-              setOpenDetail={setOpenDetail}
-            />
+            <>
+              {data?.length !== 0 ? (
+                <ListTransactions
+                  data={data}
+                  initData={initData}
+                  setDetail={setDetail}
+                  setOpenDetail={setOpenDetail}
+                />
+              ) : (
+                <View style={screenStyles.noDataWrapper}>
+                  <Text style={screenStyles.noDataText}>
+                    No transaction data
+                  </Text>
+                </View>
+              )}
+            </>
           )}
         </View>
       </View>
@@ -194,7 +206,10 @@ const Layout = (props: Props) => {
         onClose={() => setOpenDetail(false)}
         item={detail}
         onPressEdit={() => {
-          console.log('press');
+          navigation.navigate('TransactionForm', {
+            isEdit: true,
+            detail,
+          });
           setOpenDetail(false);
         }}
         onPressDelete={() => {

@@ -156,4 +156,8 @@ export const screenStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.BLACK,
   },
+  textNote: {
+    fontSize: Mixins.scaleFont(12),
+    color: Colors.BLACK,
+  },
 });
