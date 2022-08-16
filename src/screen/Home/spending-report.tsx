@@ -101,7 +101,15 @@ const Layout = (props: Props) => {
       <View style={screenStyles.rowTitle}>
         <Text style={screenStyles.title}>Spending report</Text>
         {(topIncome?.length > 0 || topExpense?.length > 0) && (
-          <TouchableOpacity onPress={() => console.log('pressed!')}>
+          <TouchableOpacity
+            onPress={() =>
+              showMessage({
+                type: 'warning',
+                message:
+                  'This menu is under development. See you on update next version :)',
+              })
+            }
+          >
             <Text style={screenStyles.titleLink}>See reports</Text>
           </TouchableOpacity>
         )}
