@@ -2,7 +2,6 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {Text, ActivityIndicator} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useIsFocused} from '@react-navigation/native';
 import container, {ContainerContext} from '@components/container';
