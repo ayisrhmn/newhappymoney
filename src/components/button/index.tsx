@@ -2,10 +2,11 @@ import React from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {Button} from 'react-native-paper';
 
-import {Colors, Mixins, Typography} from '@utils/index';
+import {Mixins, Typography} from '@utils/index';
 
 interface Props {
   children: any;
+  loading?: boolean;
   mode?: 'text' | 'outlined' | 'contained';
   dark?: boolean;
   disabled?: boolean;

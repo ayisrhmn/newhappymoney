@@ -1,67 +1,55 @@
+import http from '@utils/http';
+
 export const api = {
-  getTest() {
-    // let payload = {};
-    // return http.post('/path/to/api', payload);
-    // return new Promise(function (resolve) {
-    //   resolve({
-    //     Success: true,
-    //     Data: {
-    //       user: {
-    //         fullName: 'Muhammad Fariz Rahman',
-    //       },
-    //       overview: {
-    //         exPercentage: 25,
-    //         inPercentage: 75,
-    //         exValue: 1200000,
-    //         inValue: 5760000,
-    //         balance: 4560000,
-    //       },
-    //       recentTransactions: [
-    //         {
-    //           title: 'Buy some snacks',
-    //           category: 'Snack',
-    //           type: 'expense',
-    //           value: 100000,
-    //           inputDate: moment().format('DD-MMM-YYYY'),
-    //         },
-    //         {
-    //           title: 'Have a lunch',
-    //           category: 'Food',
-    //           type: 'expense',
-    //           value: 100000,
-    //           inputDate: moment().format('DD-MMM-YYYY'),
-    //         },
-    //         {
-    //           title: 'Data plan Indosat',
-    //           category: 'Data plan',
-    //           type: 'expense',
-    //           value: 300000,
-    //           inputDate: moment().format('DD-MMM-YYYY'),
-    //         },
-    //         {
-    //           title: 'Buy T-Shirt',
-    //           category: 'Shopping',
-    //           type: 'expense',
-    //           value: 200000,
-    //           inputDate: moment().format('DD-MMM-YYYY'),
-    //         },
-    //         {
-    //           title: 'Buy PS4 Games',
-    //           category: 'Gaming',
-    //           type: 'expense',
-    //           value: 300000,
-    //           inputDate: moment().format('DD-MMM-YYYY'),
-    //         },
-    //         {
-    //           title: 'Monthly salary',
-    //           category: 'Salary',
-    //           type: 'income',
-    //           value: 5760000,
-    //           inputDate: moment().format('DD-MMM-YYYY'),
-    //         },
-    //       ],
-    //     },
-    //   });
-    // });
+  getApiTest() {
+    return http.post('');
+  },
+  doSignIn(payload: any) {
+    return http.post('/auth/signin', payload);
+  },
+  doSignUp(payload: any) {
+    return http.post('/auth/signup', payload);
+  },
+  getMyProfile() {
+    return http.post('/user/profile');
+  },
+  getMyBalance(payload: any) {
+    return http.post('/transaction/balance', payload);
+  },
+  getMySpendingReport(payload: any) {
+    return http.post('/report', payload);
+  },
+  getTopIncome(payload: any) {
+    return http.post('/report/top/income', payload);
+  },
+  getTopExpense(payload: any) {
+    return http.post('/report/top/expense', payload);
+  },
+  getReachedLimit(payload: any) {
+    return http.post('/report/reachedlimit', payload);
+  },
+  getMyTransactions(payload: any) {
+    return http.post('/transaction', payload);
+  },
+  onCreateTransaction(payload: any) {
+    return http.post('/transaction/create', payload);
+  },
+  onEditTransaction(payload: any) {
+    return http.post('/transaction/edit', payload);
+  },
+  onDeleteTransaction(payload: any) {
+    return http.post('/transaction/delete', payload);
+  },
+  getMyCategory() {
+    return http.post('/category');
+  },
+  onCreateCategory(payload: any) {
+    return http.post('/category/create', payload);
+  },
+  onEditCategory(payload: any) {
+    return http.post('/category/edit', payload);
+  },
+  onDeleteCategory(payload: any) {
+    return http.post('/category/delete', payload);
   },
 };

@@ -1,7 +1,9 @@
 type State = {
-  valTest: string;
+  token: string;
+  closeReachedLimit: boolean;
 };
 
 export const state: State = {
-  valTest: '',
+  token: '',
+  closeReachedLimit: false,
 };

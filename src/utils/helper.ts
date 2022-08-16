@@ -21,3 +21,11 @@ export const numberWithDefaultSeparator = (x: number | string | undefined) => {
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.');
 };
+
+export const valInputWithSeparator = (x: number | string | undefined) => {
+  const addCommas = (num: any) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const removeNonNumeric = (num: any) => num.toString().replace(/[^0-9]/g, '');
+
+  return addCommas(removeNonNumeric(x));
+};

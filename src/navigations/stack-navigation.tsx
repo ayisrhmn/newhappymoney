@@ -8,7 +8,11 @@ import Header from '@components/header';
 import Splash from '@screen/Splash';
 import SignIn from '@screen/SignIn';
 import SignUp from '@screen/SignUp';
-import Home from '@screen/Home';
+
+import MainNav from '@navigations/main-navigation';
+
+import CategoryForm from '@screen/CategoryForm';
+import TransactionForm from '@screen/TransactionForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,12 +47,14 @@ const StackNavigation = () => {
           }}
         />
         <Stack.Screen
-          name="Home"
-          component={Home}
+          name="MainNav"
+          component={MainNav}
           options={{
-            headerTitle: 'Home',
+            headerShown: false,
           }}
         />
+        <Stack.Screen name="CategoryForm" component={CategoryForm} />
+        <Stack.Screen name="TransactionForm" component={TransactionForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
