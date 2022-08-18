@@ -225,24 +225,26 @@ const Layout = (props: Props) => {
                     />
                   }
                 >
-                  <ListContent
-                    title="Income"
-                    data={dataFilterByType(data, 'Income')}
-                    setOpenModalDetail={setOpenModalDetail}
-                    setSelected={setSelected}
-                  />
-                  <ListContent
-                    title="Expense"
-                    data={dataFilterByType(data, 'Expense')}
-                    setOpenModalDetail={setOpenModalDetail}
-                    setSelected={setSelected}
-                  />
+                  {dataFilterByType(data, 'Income').length !== 0 && (
+                    <ListContent
+                      title="Income"
+                      data={dataFilterByType(data, 'Income')}
+                      setOpenModalDetail={setOpenModalDetail}
+                      setSelected={setSelected}
+                    />
+                  )}
+                  {dataFilterByType(data, 'Expense').length !== 0 && (
+                    <ListContent
+                      title="Expense"
+                      data={dataFilterByType(data, 'Expense')}
+                      setOpenModalDetail={setOpenModalDetail}
+                      setSelected={setSelected}
+                    />
+                  )}
                 </ScrollView>
               ) : (
                 <View style={screenStyles.noDataWrapper}>
-                  <Text style={screenStyles.noDataText}>
-                    No transaction data
-                  </Text>
+                  <Text style={screenStyles.noDataText}>No category data</Text>
                 </View>
               )}
             </>
@@ -277,47 +279,39 @@ const Layout = (props: Props) => {
 
 const ListContent = ({title, data, setOpenModalDetail, setSelected}: any) => {
   return (
-    <View
-      style={
-        title === 'Income'
-          ? {marginTop: Mixins.scaleSize(8), marginBottom: Mixins.scaleSize(4)}
-          : {marginBottom: Mixins.scaleSize(4)}
-      }
-    >
-      <View style={screenStyles.itemList}>
-        <Text style={screenStyles.typeTitle}>{title}</Text>
-        {data?.map((item: any, i: number) => (
-          <View style={screenStyles.listItem} key={i}>
-            <TouchableOpacity
-              onPress={() => {
-                setOpenModalDetail(true);
-                setSelected(item);
-              }}
-              style={{flex: 1}}
-            >
-              <View style={[screenStyles.row, {alignItems: 'center'}]}>
-                <View style={screenStyles.iconWrap}>
-                  <IconCategory
-                    backgroundColor={
-                      item.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
-                    }
-                  />
-                </View>
-                <View>
-                  <Text style={screenStyles.category}>{item.Name}</Text>
-                  {item.Type === 'Expense' && (
-                    <Text style={screenStyles.limit}>
-                      {item.Limit === 0
-                        ? 'No limit'
-                        : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
-                    </Text>
-                  )}
-                </View>
+    <View style={screenStyles.itemList}>
+      <Text style={screenStyles.typeTitle}>{title}</Text>
+      {data?.map((item: any, i: number) => (
+        <View style={screenStyles.itemWrap} key={i}>
+          <TouchableOpacity
+            onPress={() => {
+              setOpenModalDetail(true);
+              setSelected(item);
+            }}
+            style={{flex: 1}}
+          >
+            <View style={[screenStyles.row, {alignItems: 'center'}]}>
+              <View style={screenStyles.iconWrap}>
+                <IconCategory
+                  backgroundColor={
+                    item.Type === 'Income' ? Colors.SUCCESS : Colors.DANGER
+                  }
+                />
               </View>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
+              <View>
+                <Text style={screenStyles.category}>{item.Name}</Text>
+                {item.Type === 'Expense' && (
+                  <Text style={screenStyles.limit}>
+                    {item.Limit === 0
+                      ? 'No limit'
+                      : `Limit: Rp ${Helper.numberWithSeparator(item.Limit)}`}
+                  </Text>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ))}
     </View>
   );
 };

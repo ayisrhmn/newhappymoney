@@ -30,7 +30,8 @@ export const screenStyles = StyleSheet.create({
     marginBottom: Mixins.scaleSize(64),
   },
   itemList: {
-    paddingVertical: Mixins.scaleSize(8),
+    paddingTop: Mixins.scaleSize(14),
+    paddingBottom: Mixins.scaleSize(6),
     paddingHorizontal: Mixins.scaleSize(18),
   },
   typeTitle: {
@@ -39,7 +40,7 @@ export const screenStyles = StyleSheet.create({
     color: Colors.BLACK,
     marginBottom: Mixins.scaleSize(16),
   },
-  listItem: {
+  itemWrap: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
