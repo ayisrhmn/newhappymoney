@@ -135,11 +135,58 @@ export const screenStyles = StyleSheet.create({
   },
 
   noDataWrapper: {
-    paddingVertical: Mixins.scaleSize(16),
+    paddingVertical: Mixins.scaleSize(34),
   },
   noDataText: {
     fontSize: Mixins.scaleFont(14),
     textAlign: 'center',
     color: Colors.BLACK,
+  },
+
+  row: {
+    flexDirection: 'row',
+  },
+  modalContainer: {
+    padding: Mixins.scaleSize(16),
+  },
+  modalTitle: {
+    fontSize: Mixins.scaleFont(14),
+    color: Colors.BLACK,
+    width: '90%',
+  },
+  modalTrTitle: {
+    fontSize: Mixins.scaleFont(15),
+    fontWeight: 'bold',
+    color: Colors.BLACK,
+  },
+  textNote: {
+    fontSize: Mixins.scaleFont(12),
+    color: Colors.BLACK,
+  },
+  actions: {
+    alignItems: 'flex-end',
+    marginTop: Mixins.scaleSize(32),
+  },
+  actEdit: {
+    fontSize: Mixins.scaleFont(14),
+    fontWeight: 'bold',
+    color: Colors.PRIMARY,
+    marginRight: Mixins.scaleSize(14),
+  },
+  actDelete: {
+    fontSize: Mixins.scaleFont(14),
+    fontWeight: 'bold',
+    color: Colors.DANGER,
+  },
+  actYes: {
+    fontSize: Mixins.scaleFont(14),
+    fontWeight: 'bold',
+    color: Colors.DANGER,
+    marginRight: Mixins.scaleSize(14),
+  },
+  actNo: {
+    fontSize: Mixins.scaleFont(14),
+    fontWeight: 'bold',
+    color: Colors.GREY,
   },
 });

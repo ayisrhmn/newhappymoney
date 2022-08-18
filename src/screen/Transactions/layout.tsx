@@ -10,12 +10,12 @@ import Modal from '@components/modal';
 import {useActions} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
-import ModalDate from './modal-date';
 import {screenStyles} from './styles';
-
-import moment from 'moment';
+import ModalDate from './modal-date';
 import ModalDetail from './modal-detail';
 import ModalDelete from './modal-delete';
+
+import moment from 'moment';
 
 interface Props {
   navigation: any;
@@ -71,7 +71,16 @@ const Layout = (props: Props) => {
       );
 
     getMyCategory()
-      .then(res => setCategory(res))
+      .then(res => {
+        setCategory(res);
+        if (res.length === 0) {
+          navigation.navigate('Category');
+          showMessage({
+            type: 'warning',
+            message: 'Please input category first',
+          });
+        }
+      })
       .catch(() =>
         showMessage({
           type: 'danger',
@@ -303,7 +312,9 @@ const ListTransactions = ({data, initData, setDetail, setOpenDetail}: any) => {
       renderItem={({item, index}) => (
         <View
           style={
-            index === 0
+            data.length === 1
+              ? [screenStyles.itemList, {paddingVertical: Mixins.scaleSize(16)}]
+              : index === 0
               ? [screenStyles.itemList, {paddingTop: Mixins.scaleSize(16)}]
               : index === data.length - 1
               ? [screenStyles.itemList, {paddingBottom: Mixins.scaleSize(16)}]
