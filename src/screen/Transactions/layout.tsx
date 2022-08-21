@@ -7,11 +7,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useIsFocused} from '@react-navigation/native';
 import container from '@components/container';
 import Modal from '@components/modal';
+import ModalDateMonth from '@components/modal-datemonth';
 import {useActions} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
 import {screenStyles} from './styles';
-import ModalDate from './modal-date';
 import ModalDetail from './modal-detail';
 import ModalDelete from './modal-delete';
 
@@ -54,9 +54,12 @@ const Layout = (props: Props) => {
     moment().format('MMMM YYYY'),
   );
 
+  const [addDisabled, setAddDisabled] = React.useState(false);
+
   const initData = () => {
     setDetail({});
     setLoading(true);
+    setAddDisabled(true);
 
     getMyTransactions(payload)
       .then(res => {
@@ -74,11 +77,14 @@ const Layout = (props: Props) => {
       .then(res => {
         setCategory(res);
         if (res.length === 0) {
+          setAddDisabled(true);
           navigation.navigate('Category');
           showMessage({
             type: 'warning',
             message: 'Please input category first',
           });
+        } else {
+          setAddDisabled(false);
         }
       })
       .catch(() =>
@@ -136,6 +142,7 @@ const Layout = (props: Props) => {
         <View style={screenStyles.headerTitle}>
           <Text style={screenStyles.mainTitle}>List transactions</Text>
           <TouchableOpacity
+            disabled={addDisabled}
             onPress={() => navigation.navigate('TransactionForm')}
           >
             <Text style={screenStyles.linkTitle}>Add transaction</Text>
@@ -279,7 +286,7 @@ const Layout = (props: Props) => {
         </View>
       </Modal>
 
-      <ModalDate
+      <ModalDateMonth
         visible={openDate}
         onClose={() => {
           setOpenDate(false);
