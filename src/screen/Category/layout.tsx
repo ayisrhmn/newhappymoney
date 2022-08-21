@@ -202,7 +202,10 @@ const Layout = (props: Props) => {
       <View style={screenStyles.container}>
         <View style={screenStyles.headerTitle}>
           <Text style={screenStyles.mainTitle}>List category</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('CategoryForm')}>
+          <TouchableOpacity
+            disabled={!loading && isFocused ? false : true}
+            onPress={() => navigation.navigate('CategoryForm')}
+          >
             <Text style={screenStyles.linkTitle}>Add category</Text>
           </TouchableOpacity>
         </View>

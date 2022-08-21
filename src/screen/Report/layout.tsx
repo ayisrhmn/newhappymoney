@@ -2,11 +2,13 @@ import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {ActivityIndicator, Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useIsFocused} from '@react-navigation/native';
-import {ContainerContext} from '@components/container';
+import container, {ContainerContext} from '@components/container';
 import ProgressChart from '@components/progress-chart';
 import IconCategory from '@components/icon-category';
+import ModalDateMonth from '@components/modal-datemonth';
 import {useActions} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
@@ -23,29 +25,46 @@ const Layout = (props: Props) => {
 
   const ctx = React.useContext(ContainerContext);
 
-  const {getMySpendingReport, getTopIncome, getTopExpense} = useActions();
+  const {getMyBalance, getMySpendingReport, getTopIncome, getTopExpense} =
+    useActions();
 
   const isFocused = useIsFocused();
 
   const [loading, setLoading] = React.useState(false);
+  const [balance, setBalance] = React.useState(0);
   const [spending, setSpending] = React.useState({}) as any;
   const [topIncome, setTopIncome] = React.useState([]) as any;
   const [topExpense, setTopExpense] = React.useState([]) as any;
 
+  const [openDate, setOpenDate] = React.useState(false);
+  const [date, setDate] = React.useState(moment().format('YYYY/MM'));
+  const [displayDate, setDisplayDate] = React.useState(
+    moment().format('MMMM YYYY'),
+  );
+  const [TrDateMonth, setTrDateMonth] = React.useState(
+    moment().format('YYYY-MM'),
+  );
+
   const initData = () => {
     setLoading(true);
+    setBalance(0);
 
     let payload = {
-      TrDateMonth: moment().format('YYYY-MM'),
-      Show: 'Top3',
+      TrDateMonth,
+      Show: '',
     };
     Promise.all([
+      getMyBalance(payload),
       getMySpendingReport(payload),
       getTopIncome(payload),
       getTopExpense(payload),
     ])
       .then(res => {
-        let [spending_report, top_income, top_expense] = res;
+        let [my_balance, spending_report, top_income, top_expense] = res;
+
+        if (my_balance) {
+          setBalance(my_balance);
+        }
 
         if (spending_report) {
           let {
@@ -89,7 +108,7 @@ const Layout = (props: Props) => {
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing]);
+  }, [isFocused, ctx.isRefreshing, TrDateMonth]);
 
   const percentIn = isNaN(spending.PercentageIn * 100)
     ? 0
@@ -99,16 +118,32 @@ const Layout = (props: Props) => {
     : spending.PercentageEx * 100;
 
   return (
-    <View style={screenStyles.sectionContainer}>
-      <View style={screenStyles.rowTitle}>
-        <Text style={screenStyles.title}>Spending report</Text>
-        {(topIncome?.length > 0 || topExpense?.length > 0) && (
-          <TouchableOpacity onPress={() => navigation.navigate('Report')}>
-            <Text style={screenStyles.titleLink}>See reports</Text>
+    <>
+      <View style={screenStyles.container}>
+        <View style={screenStyles.headerContainer}>
+          <View style={screenStyles.row}>
+            <Text style={screenStyles.balanceLabel}>Balance:</Text>
+            <Text style={screenStyles.balanceValue}>
+              Rp{' '}
+              {!loading && isFocused ? Helper.numberWithSeparator(balance) : 0}
+            </Text>
+          </View>
+          <TouchableOpacity
+            disabled={!loading ? false : true}
+            onPress={() => setOpenDate(true)}
+          >
+            <View style={[screenStyles.row, {alignItems: 'center'}]}>
+              <Icon
+                name="calendar-outline"
+                color={Colors.GREY}
+                size={Mixins.scaleFont(14)}
+                style={{marginRight: Mixins.scaleSize(5)}}
+              />
+              <Text style={screenStyles.textFilter}>{displayDate}</Text>
+            </View>
           </TouchableOpacity>
-        )}
+        </View>
       </View>
-
       <View style={screenStyles.card}>
         <View style={screenStyles.amountWrapper}>
           <TotalAmountReport
@@ -128,26 +163,46 @@ const Layout = (props: Props) => {
         </View>
 
         {topIncome?.length !== 0 && (
-          <Top3List
+          <TopList
             data={topIncome}
             type="income"
             loading={loading}
             isFocused={isFocused}
             navigation={navigation}
+            TrDateMonth={TrDateMonth}
           />
         )}
 
         {topExpense?.length !== 0 && (
-          <Top3List
+          <TopList
             data={topExpense}
             type="expense"
             loading={loading}
             isFocused={isFocused}
             navigation={navigation}
+            TrDateMonth={TrDateMonth}
           />
         )}
       </View>
-    </View>
+
+      <ModalDateMonth
+        visible={openDate}
+        onClose={() => {
+          setOpenDate(false);
+        }}
+        value={date}
+        onMonthYearChange={(selectedDate: any) => {
+          let date = selectedDate.replace(' ', '/');
+          let valueDate = selectedDate.replace(' ', '-');
+          let displayDate = moment(valueDate).format('MMMM YYYY');
+
+          setDate(date);
+          setDisplayDate(displayDate);
+          setTrDateMonth(valueDate);
+          setOpenDate(false);
+        }}
+      />
+    </>
   );
 };
 
@@ -178,7 +233,14 @@ const TotalAmountReport = ({income, expense, loading, isFocused}: any) => {
   );
 };
 
-const Top3List = ({data, type, loading, isFocused, navigation}: any) => {
+const TopList = ({
+  data,
+  type,
+  loading,
+  isFocused,
+  navigation,
+  TrDateMonth,
+}: any) => {
   return (
     <View
       style={
@@ -193,7 +255,7 @@ const Top3List = ({data, type, loading, isFocused, navigation}: any) => {
           marginBottom: Mixins.scaleSize(18),
         }}
       >
-        Top 3 {type}
+        Top {type}
       </Text>
       {loading && (
         <ActivityIndicator
@@ -211,7 +273,7 @@ const Top3List = ({data, type, loading, isFocused, navigation}: any) => {
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('ReportTransactions', {
-                    TrDateMonth: moment().format('YYYY-MM'),
+                    TrDateMonth,
                     CategoryId: item._id,
                     CategoryName: item.Category,
                   })
@@ -252,4 +314,4 @@ const Top3List = ({data, type, loading, isFocused, navigation}: any) => {
   );
 };
 
-export default Layout;
+export default container(Layout);

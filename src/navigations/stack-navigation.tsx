@@ -13,6 +13,8 @@ import MainNav from '@navigations/main-navigation';
 
 import CategoryForm from '@screen/CategoryForm';
 import TransactionForm from '@screen/TransactionForm';
+import Report from '@screen/Report';
+import ReportTransactions from '@screen/ReportTransactions';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +57,20 @@ const StackNavigation = () => {
         />
         <Stack.Screen name="CategoryForm" component={CategoryForm} />
         <Stack.Screen name="TransactionForm" component={TransactionForm} />
+        <Stack.Screen
+          name="Report"
+          component={Report}
+          options={{
+            headerTitle: 'Report',
+          }}
+        />
+        <Stack.Screen
+          name="ReportTransactions"
+          component={ReportTransactions}
+          options={{
+            headerTitle: 'Report Transactions',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
