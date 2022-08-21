@@ -83,7 +83,7 @@ const Layout = (props: Props) => {
 
       <View style={screenStyles.versionContent}>
         <Text style={screenStyles.versionText}>
-          Version 1.0.0 | by Ayisrhmn
+          Version 1.0.1 | by Ayisrhmn
         </Text>
 
         <View style={screenStyles.followUs}>
