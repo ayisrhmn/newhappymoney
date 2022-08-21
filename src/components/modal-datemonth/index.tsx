@@ -13,7 +13,7 @@ interface Props {
   onMonthYearChange: (selectedDate: any) => void;
 }
 
-const ModalDate = (props: Props) => {
+const ModalDateMonth = (props: Props) => {
   const options = {
     textHeaderColor: Colors.BLACK,
     textHeaderFontSize: Mixins.scaleFont(16),
@@ -44,4 +44,4 @@ const ModalDate = (props: Props) => {
   );
 };
 
-export default ModalDate;
+export default ModalDateMonth;

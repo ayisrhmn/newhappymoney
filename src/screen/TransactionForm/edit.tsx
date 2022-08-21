@@ -23,7 +23,6 @@ interface Props {
 const EditForm = (props: Props) => {
   const {navigation, route} = props;
 
-  const params = route?.params;
   const detail = route?.params?.detail;
 
   const {getMyCategory, onEditTransaction} = useActions();

@@ -13,67 +13,65 @@ export const screenStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: Mixins.scaleSize(18),
-    marginBottom: Mixins.scaleSize(16),
+    marginBottom: Mixins.scaleSize(14),
+  },
+  textFilter: {
+    fontSize: Mixins.scaleFont(12),
+    fontWeight: 'bold',
+    color: Colors.GREY,
   },
   mainTitle: {
-    fontSize: Mixins.scaleFont(16),
-    fontWeight: 'bold',
-    color: Colors.BLACK,
-  },
-  linkTitle: {
     fontSize: Mixins.scaleFont(14),
     fontWeight: 'bold',
-    color: Colors.PRIMARY,
+    color: Colors.BLACK,
   },
   listSection: {
     backgroundColor: Colors.WHITE,
-    marginBottom: Mixins.scaleSize(64),
+    marginBottom: Mixins.scaleSize(110),
   },
   itemList: {
-    paddingTop: Mixins.scaleSize(14),
-    paddingBottom: Mixins.scaleSize(6),
+    paddingVertical: Mixins.scaleSize(8),
     paddingHorizontal: Mixins.scaleSize(18),
   },
-  typeTitle: {
-    fontSize: Mixins.scaleFont(14),
-    fontWeight: 'bold',
-    color: Colors.BLACK,
-    marginBottom: Mixins.scaleSize(16),
+  noDataWrapper: {
+    paddingVertical: Mixins.scaleSize(34),
   },
-  itemWrap: {
+  noDataText: {
+    fontSize: Mixins.scaleFont(14),
+    textAlign: 'center',
+    color: Colors.BLACK,
+  },
+  trList: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: Mixins.scaleSize(16),
+    alignItems: 'center',
   },
-  iconWrap: {
-    marginRight: Mixins.scaleSize(10),
-  },
-  category: {
+  categoryLabel: {
     fontSize: Mixins.scaleFont(14),
     color: Colors.BLACK,
+    marginBottom: Mixins.scaleSize(4),
   },
-  limit: {
+  categoryTrLabel: {
     fontSize: Mixins.scaleFont(12),
+    marginBottom: Mixins.scaleSize(4),
     color: Colors.PRIMARY,
-    marginTop: Mixins.scaleSize(4),
+  },
+  trDateLabel: {
+    fontSize: Mixins.scaleFont(12),
+    color: Colors.GREY,
+  },
+  amountTr: {
+    fontSize: Mixins.scaleFont(14),
+    marginBottom: Mixins.scaleSize(4),
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
   },
   modalContainer: {
     padding: Mixins.scaleSize(16),
   },
-  modalTitle: {
-    fontSize: Mixins.scaleFont(14),
-    color: Colors.BLACK,
-    width: '90%',
-  },
-  modalCtTitle: {
-    fontSize: Mixins.scaleFont(16),
-    fontWeight: 'bold',
-    color: Colors.BLACK,
-  },
   actions: {
     alignItems: 'flex-end',
-    marginTop: Mixins.scaleSize(24),
+    marginTop: Mixins.scaleSize(32),
   },
   actEdit: {
     fontSize: Mixins.scaleFont(14),
@@ -97,12 +95,18 @@ export const screenStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.GREY,
   },
-  noDataWrapper: {
-    paddingVertical: Mixins.scaleSize(34),
-  },
-  noDataText: {
+  modalTitle: {
     fontSize: Mixins.scaleFont(14),
-    textAlign: 'center',
+    color: Colors.BLACK,
+    width: '90%',
+  },
+  modalTrTitle: {
+    fontSize: Mixins.scaleFont(15),
+    fontWeight: 'bold',
+    color: Colors.BLACK,
+  },
+  textNote: {
+    fontSize: Mixins.scaleFont(12),
     color: Colors.BLACK,
   },
 });
