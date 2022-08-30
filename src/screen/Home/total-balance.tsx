@@ -1,12 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Checkbox, Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
 
 import {useIsFocused} from '@react-navigation/native';
 import {ContainerContext} from '@components/container';
-import {useActions} from '@overmind/index';
-import {Helper} from '@utils/index';
+import {useActions, useState} from '@overmind/index';
+import {Colors, Helper} from '@utils/index';
 
 import moment from 'moment';
 
@@ -19,7 +19,8 @@ interface Props {
 const Layout = (props: Props) => {
   const ctx = React.useContext(ContainerContext);
 
-  const {getMyBalance} = useActions();
+  const {getMyBalance, setShowNextMonth} = useActions();
+  const {showNextMonth} = useState();
 
   const isFocused = useIsFocused();
 
@@ -30,7 +31,9 @@ const Layout = (props: Props) => {
     setLoading(true);
 
     let payload = {
-      TrDateMonth: moment().format('YYYY-MM'),
+      TrDateMonth: showNextMonth
+        ? Helper.currentWithLastdateCondition('payload')
+        : moment().format('YYYY-MM'),
     };
     getMyBalance(payload)
       .then(res => {
@@ -51,14 +54,32 @@ const Layout = (props: Props) => {
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing]);
+  }, [isFocused, ctx.isRefreshing, showNextMonth]);
 
   return (
     <View style={screenStyles.balanceContainer}>
-      <Text style={screenStyles.balanceValue}>
-        Rp {!loading && isFocused ? Helper.numberWithSeparator(balance) : 0}
-      </Text>
-      <Text style={screenStyles.balanceLabel}>Total balance</Text>
+      <View style={[screenStyles.row, {justifyContent: 'space-between'}]}>
+        <View>
+          <Text style={screenStyles.balanceValue}>
+            Rp {!loading && isFocused ? Helper.numberWithSeparator(balance) : 0}
+          </Text>
+          <Text style={screenStyles.balanceLabel}>Total balance</Text>
+        </View>
+        {Helper.getLastDate() && (
+          <View style={[screenStyles.row, {alignItems: 'center'}]}>
+            <View style={screenStyles.sizeCheckbox}>
+              <Checkbox
+                status={showNextMonth ? 'checked' : 'unchecked'}
+                color={Colors.PRIMARY}
+                onPress={() => {
+                  setShowNextMonth(!showNextMonth);
+                }}
+              />
+            </View>
+            <Text style={screenStyles.checkboxText}>Show next month</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };

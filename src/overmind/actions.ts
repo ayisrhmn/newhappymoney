@@ -167,3 +167,7 @@ export const onDeleteCategory = async (context: any, payload: object) => {
 
   return response;
 };
+
+export const setShowNextMonth = (context: any, value: boolean) => {
+  context.state.showNextMonth = value;
+};

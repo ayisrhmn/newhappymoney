@@ -189,4 +189,15 @@ export const screenStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.GREY,
   },
+  sizeCheckbox: {
+    transform: [
+      {scaleX: Mixins.scaleSize(0.74)},
+      {scaleY: Mixins.scaleSize(0.74)},
+    ],
+  },
+  checkboxText: {
+    fontSize: Mixins.scaleFont(12),
+    color: Colors.BLACK,
+    marginLeft: Mixins.scaleSize(-3),
+  },
 });
