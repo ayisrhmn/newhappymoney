@@ -21,7 +21,7 @@ const Layout = (props: Props) => {
   const ctx = React.useContext(ContainerContext);
 
   const {getReachedLimit, setCloseReachedLimit} = useActions();
-  const {closeReachedLimit} = useState();
+  const {closeReachedLimit, showNextMonth} = useState();
 
   const isFocused = useIsFocused();
 
@@ -31,7 +31,9 @@ const Layout = (props: Props) => {
     setData([]);
 
     let payload = {
-      TrDateMonth: moment().format('YYYY-MM'),
+      TrDateMonth: showNextMonth
+        ? Helper.currentWithLastdateCondition('payload')
+        : moment().format('YYYY-MM'),
     };
     getReachedLimit(payload)
       .then(res => {
@@ -51,7 +53,7 @@ const Layout = (props: Props) => {
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing]);
+  }, [isFocused, ctx.isRefreshing, showNextMonth]);
 
   return (
     <View

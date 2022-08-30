@@ -5,7 +5,7 @@ import {showMessage} from 'react-native-flash-message';
 
 import {useIsFocused} from '@react-navigation/native';
 import {ContainerContext} from '@components/container';
-import {useActions} from '@overmind/index';
+import {useActions, useState} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
 import moment from 'moment';
@@ -23,6 +23,7 @@ const Layout = (props: Props) => {
   const ctx = React.useContext(ContainerContext);
 
   const {getMyTransactions, onDeleteTransaction} = useActions();
+  const {showNextMonth} = useState();
 
   const isFocused = useIsFocused();
 
@@ -39,7 +40,9 @@ const Layout = (props: Props) => {
     setLoading(true);
 
     let payload = {
-      TrDateMonth: moment().format('YYYY-MM'),
+      TrDateMonth: showNextMonth
+        ? Helper.currentWithLastdateCondition('payload')
+        : moment().format('YYYY-MM'),
       Show: 'Recent',
       Sort: 'Newest',
     };
@@ -62,7 +65,7 @@ const Layout = (props: Props) => {
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing]);
+  }, [isFocused, ctx.isRefreshing, showNextMonth]);
 
   const onDelete = (_id: any) => {
     setDelLoading(true);

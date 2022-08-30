@@ -2,9 +2,7 @@ import React from 'react';
 import DatePicker from 'react-native-modern-datepicker';
 
 import Modal from '@components/modal';
-import {Colors, Mixins, Typography} from '@utils/index';
-
-import moment from 'moment';
+import {Colors, Helper, Mixins, Typography} from '@utils/index';
 
 interface Props {
   visible: boolean;
@@ -36,7 +34,7 @@ const ModalDateMonth = (props: Props) => {
         mode="monthYear"
         selectorStartingYear={2000}
         current={props?.value}
-        maximumDate={moment().format('YYYY/MM')}
+        maximumDate={Helper.currentWithLastdateCondition('filter')}
         options={options}
         onMonthYearChange={props?.onMonthYearChange}
       />

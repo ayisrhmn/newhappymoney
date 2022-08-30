@@ -7,7 +7,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {ContainerContext} from '@components/container';
 import ProgressChart from '@components/progress-chart';
 import IconCategory from '@components/icon-category';
-import {useActions} from '@overmind/index';
+import {useActions, useState} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
 import moment from 'moment';
@@ -24,6 +24,7 @@ const Layout = (props: Props) => {
   const ctx = React.useContext(ContainerContext);
 
   const {getMySpendingReport, getTopIncome, getTopExpense} = useActions();
+  const {showNextMonth} = useState();
 
   const isFocused = useIsFocused();
 
@@ -36,7 +37,9 @@ const Layout = (props: Props) => {
     setLoading(true);
 
     let payload = {
-      TrDateMonth: moment().format('YYYY-MM'),
+      TrDateMonth: showNextMonth
+        ? Helper.currentWithLastdateCondition('payload')
+        : moment().format('YYYY-MM'),
       Show: 'Top3',
     };
     Promise.all([
@@ -89,7 +92,7 @@ const Layout = (props: Props) => {
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing]);
+  }, [isFocused, ctx.isRefreshing, showNextMonth]);
 
   const percentIn = isNaN(spending.PercentageIn * 100)
     ? 0

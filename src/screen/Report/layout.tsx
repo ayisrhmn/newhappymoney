@@ -9,7 +9,7 @@ import container, {ContainerContext} from '@components/container';
 import ProgressChart from '@components/progress-chart';
 import IconCategory from '@components/icon-category';
 import ModalDateMonth from '@components/modal-datemonth';
-import {useActions} from '@overmind/index';
+import {useActions, useState} from '@overmind/index';
 import {Colors, Helper, Mixins} from '@utils/index';
 
 import moment from 'moment';
@@ -27,6 +27,7 @@ const Layout = (props: Props) => {
 
   const {getMyBalance, getMySpendingReport, getTopIncome, getTopExpense} =
     useActions();
+  const {showNextMonth} = useState();
 
   const isFocused = useIsFocused();
 
@@ -37,12 +38,20 @@ const Layout = (props: Props) => {
   const [topExpense, setTopExpense] = React.useState([]) as any;
 
   const [openDate, setOpenDate] = React.useState(false);
-  const [date, setDate] = React.useState(moment().format('YYYY/MM'));
+  const [date, setDate] = React.useState(
+    showNextMonth
+      ? Helper.currentWithLastdateCondition('filter')
+      : moment().format('YYYY/MM'),
+  );
   const [displayDate, setDisplayDate] = React.useState(
-    moment().format('MMMM YYYY'),
+    showNextMonth
+      ? moment().add(1, 'month').format('MMMM YYYY')
+      : moment().format('MMMM YYYY'),
   );
   const [TrDateMonth, setTrDateMonth] = React.useState(
-    moment().format('YYYY-MM'),
+    showNextMonth
+      ? Helper.currentWithLastdateCondition('payload')
+      : moment().format('YYYY-MM'),
   );
 
   const initData = () => {
@@ -108,7 +117,7 @@ const Layout = (props: Props) => {
     }
 
     return () => {};
-  }, [isFocused, ctx.isRefreshing, TrDateMonth]);
+  }, [isFocused, ctx.isRefreshing, TrDateMonth, showNextMonth]);
 
   const percentIn = isNaN(spending.PercentageIn * 100)
     ? 0
