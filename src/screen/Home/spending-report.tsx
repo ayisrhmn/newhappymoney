@@ -137,6 +137,7 @@ const Layout = (props: Props) => {
             loading={loading}
             isFocused={isFocused}
             navigation={navigation}
+            showNextMonth={showNextMonth}
           />
         )}
 
@@ -147,6 +148,7 @@ const Layout = (props: Props) => {
             loading={loading}
             isFocused={isFocused}
             navigation={navigation}
+            showNextMonth={showNextMonth}
           />
         )}
       </View>
@@ -181,7 +183,14 @@ const TotalAmountReport = ({income, expense, loading, isFocused}: any) => {
   );
 };
 
-const Top3List = ({data, type, loading, isFocused, navigation}: any) => {
+const Top3List = ({
+  data,
+  type,
+  loading,
+  isFocused,
+  navigation,
+  showNextMonth,
+}: any) => {
   return (
     <View
       style={
@@ -214,7 +223,9 @@ const Top3List = ({data, type, loading, isFocused, navigation}: any) => {
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('ReportTransactions', {
-                    TrDateMonth: moment().format('YYYY-MM'),
+                    TrDateMonth: showNextMonth
+                      ? Helper.currentWithLastdateCondition('payload')
+                      : moment().format('YYYY-MM'),
                     CategoryId: item._id,
                     CategoryName: item.Category,
                   })

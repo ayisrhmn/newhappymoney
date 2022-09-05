@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
 import {useForm, Controller} from 'react-hook-form';
@@ -258,8 +258,11 @@ const ModalCategory = ({
   setOpenCategory,
   setCtSelected,
   ctSelected,
-  setCategory,
+  setValue,
 }: any) => {
+  const incomeCategory = category?.filter((o: any) => o.Type === 'Income');
+  const expenseCategory = category?.filter((o: any) => o.Type === 'Expense');
+
   return (
     <Modal
       show={visible}
@@ -267,19 +270,18 @@ const ModalCategory = ({
       showCloseButton={true}
       onClose={() => setOpenCategory(false)}
     >
-      <View style={{padding: Mixins.scaleSize(14)}}>
+      <View style={screenStyles.modalCategoryContainer}>
         <Text style={screenStyles.modalTitleCategory}>Select category</Text>
-        <View style={{marginBottom: Mixins.scaleSize(16)}}>
-          <Text style={{...screenStyles.typeCategory, color: Colors.SUCCESS}}>
-            Income
-          </Text>
-          {category
-            ?.filter((o: any) => o.Type === 'Income')
-            ?.map((item: any, i: any) => (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{marginBottom: Mixins.scaleSize(16)}}>
+            <Text style={{...screenStyles.typeCategory, color: Colors.SUCCESS}}>
+              Income
+            </Text>
+            {incomeCategory?.map((item: any, i: any) => (
               <TouchableOpacity
                 onPress={() => {
                   setCtSelected(item);
-                  setCategory(item._id);
+                  setValue('Category', item._id, {shouldValidate: true});
                   setOpenCategory(false);
                 }}
                 key={i}
@@ -302,23 +304,30 @@ const ModalCategory = ({
                 </View>
               </TouchableOpacity>
             ))}
-        </View>
-        <View>
-          <Text style={{...screenStyles.typeCategory, color: Colors.DANGER}}>
-            Expense
-          </Text>
-          {category
-            ?.filter((o: any) => o.Type === 'Expense')
-            ?.map((item: any, i: any) => (
+          </View>
+          <View>
+            <Text style={{...screenStyles.typeCategory, color: Colors.DANGER}}>
+              Expense
+            </Text>
+            {expenseCategory?.map((item: any, i: any) => (
               <TouchableOpacity
                 onPress={() => {
                   setCtSelected(item);
-                  setCategory(item._id);
+                  setValue('Category', item._id, {shouldValidate: true});
                   setOpenCategory(false);
                 }}
                 key={i}
               >
-                <View style={screenStyles.rowCategory}>
+                <View
+                  style={
+                    i === expenseCategory.length - 1
+                      ? {
+                          ...screenStyles.rowCategory,
+                          marginBottom: Mixins.scaleSize(24),
+                        }
+                      : screenStyles.rowCategory
+                  }
+                >
                   <Text style={screenStyles.nameCategory}>{item.Name}</Text>
                   {ctSelected?._id === item._id ? (
                     <Icon
@@ -336,7 +345,8 @@ const ModalCategory = ({
                 </View>
               </TouchableOpacity>
             ))}
-        </View>
+          </View>
+        </ScrollView>
       </View>
     </Modal>
   );
