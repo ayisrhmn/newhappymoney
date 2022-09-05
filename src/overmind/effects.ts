@@ -13,9 +13,6 @@ export const api = {
   getMyProfile() {
     return http.post('/user/profile');
   },
-  getMyBalance(payload: any) {
-    return http.post('/transaction/balance', payload);
-  },
   getMySpendingReport(payload: any) {
     return http.post('/report', payload);
   },
@@ -28,17 +25,8 @@ export const api = {
   getReachedLimit(payload: any) {
     return http.post('/report/reachedlimit', payload);
   },
-  getMyTransactions(payload: any) {
-    return http.post('/transaction', payload);
-  },
-  onCreateTransaction(payload: any) {
-    return http.post('/transaction/create', payload);
-  },
-  onEditTransaction(payload: any) {
-    return http.post('/transaction/edit', payload);
-  },
-  onDeleteTransaction(payload: any) {
-    return http.post('/transaction/delete', payload);
+  getSpendingToday(payload: any) {
+    return http.post('/report/spent/today', payload);
   },
   getMyCategory() {
     return http.post('/category');
@@ -51,5 +39,20 @@ export const api = {
   },
   onDeleteCategory(payload: any) {
     return http.post('/category/delete', payload);
+  },
+  getMyBalance(payload: any) {
+    return http.post('/transaction/balance', payload);
+  },
+  getMyTransactions(payload: any) {
+    return http.post('/transaction', payload);
+  },
+  onCreateTransaction(payload: any) {
+    return http.post('/transaction/create', payload);
+  },
+  onEditTransaction(payload: any) {
+    return http.post('/transaction/edit', payload);
+  },
+  onDeleteTransaction(payload: any) {
+    return http.post('/transaction/delete', payload);
   },
 };

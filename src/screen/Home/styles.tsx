@@ -189,6 +189,11 @@ export const screenStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.GREY,
   },
+  rowCheckNextMonth: {
+    alignItems: 'center',
+    marginTop: Mixins.scaleSize(2),
+    marginLeft: Mixins.scaleSize(-6),
+  },
   sizeCheckbox: {
     transform: [
       {scaleX: Mixins.scaleSize(0.74)},

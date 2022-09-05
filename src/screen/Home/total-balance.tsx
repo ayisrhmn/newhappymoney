@@ -19,33 +19,48 @@ interface Props {
 const Layout = (props: Props) => {
   const ctx = React.useContext(ContainerContext);
 
-  const {getMyBalance, setShowNextMonth} = useActions();
+  const {getMyBalance, setShowNextMonth, getSpendingToday} = useActions();
   const {showNextMonth} = useState();
 
   const isFocused = useIsFocused();
 
   const [loading, setLoading] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
+  const [spentToday, setSpentToday] = React.useState(0);
 
   const initData = () => {
     setLoading(true);
+    setBalance(0);
+    setSpentToday(0);
 
     let payload = {
       TrDateMonth: showNextMonth
         ? Helper.currentWithLastdateCondition('payload')
         : moment().format('YYYY-MM'),
     };
-    getMyBalance(payload)
+    let payloadTdy = {
+      TrDate: moment().format('YYYY-MM-DD'),
+    };
+
+    Promise.all([getMyBalance(payload), getSpendingToday(payloadTdy)])
       .then(res => {
-        setBalance(res);
-        setLoading(false);
+        let [my_balance, spent_today] = res;
+
+        if (my_balance) {
+          setBalance(my_balance);
+        }
+
+        if (spent_today) {
+          setSpentToday(spent_today);
+        }
       })
       .catch(() =>
         showMessage({
           type: 'danger',
-          message: 'Failed load data balance',
+          message: 'Failed load data balance & spent today',
         }),
-      );
+      )
+      .finally(() => setLoading(false));
   };
 
   React.useEffect(() => {
@@ -64,19 +79,38 @@ const Layout = (props: Props) => {
             Rp {!loading && isFocused ? Helper.numberWithSeparator(balance) : 0}
           </Text>
           <Text style={screenStyles.balanceLabel}>Total balance</Text>
-        </View>
-        {Helper.getLastDate() && (
-          <View style={[screenStyles.row, {alignItems: 'center'}]}>
-            <View style={screenStyles.sizeCheckbox}>
-              <Checkbox
-                status={showNextMonth ? 'checked' : 'unchecked'}
-                color={Colors.PRIMARY}
-                onPress={() => {
-                  setShowNextMonth(!showNextMonth);
-                }}
-              />
+          {Helper.getLastDate() && (
+            <View style={[screenStyles.row, screenStyles.rowCheckNextMonth]}>
+              <View style={screenStyles.sizeCheckbox}>
+                <Checkbox
+                  status={showNextMonth ? 'checked' : 'unchecked'}
+                  color={Colors.PRIMARY}
+                  onPress={() => {
+                    setShowNextMonth(!showNextMonth);
+                  }}
+                />
+              </View>
+              <Text style={screenStyles.checkboxText}>Show next month</Text>
             </View>
-            <Text style={screenStyles.checkboxText}>Show next month</Text>
+          )}
+        </View>
+        {spentToday !== 0 && (
+          <View>
+            <Text
+              style={{
+                ...screenStyles.balanceValue,
+                color: Colors.DANGER,
+                textAlign: 'right',
+              }}
+            >
+              Rp{' '}
+              {!loading && isFocused
+                ? Helper.numberWithSeparator(spentToday)
+                : 0}
+            </Text>
+            <Text style={{...screenStyles.balanceLabel, textAlign: 'right'}}>
+              Total spent today
+            </Text>
           </View>
         )}
       </View>

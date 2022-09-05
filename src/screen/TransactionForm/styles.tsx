@@ -35,6 +35,11 @@ export const screenStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.PRIMARY,
   },
+  modalCategoryContainer: {
+    paddingTop: Mixins.scaleSize(14),
+    paddingHorizontal: Mixins.scaleSize(14),
+    height: '100%',
+  },
   modalTitleCategory: {
     fontSize: Mixins.scaleFont(16),
     fontWeight: 'bold',
@@ -44,13 +49,13 @@ export const screenStyles = StyleSheet.create({
   typeCategory: {
     fontSize: Mixins.scaleFont(12),
     fontWeight: 'bold',
-    marginBottom: Mixins.scaleSize(8),
+    marginBottom: Mixins.scaleSize(12),
   },
   rowCategory: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: Mixins.scaleSize(6),
+    marginBottom: Mixins.scaleSize(16),
   },
   nameCategory: {
     fontSize: Mixins.scaleFont(14),

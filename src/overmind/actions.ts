@@ -38,18 +38,6 @@ export const getMyProfile = async (context: any) => {
   }
 };
 
-export const getMyBalance = async (context: any, payload: object) => {
-  let response = await context.effects.api.getMyBalance(payload);
-
-  let {
-    data: {Success, Data},
-  } = response;
-
-  if (Success) {
-    return Data;
-  }
-};
-
 export const getMySpendingReport = async (context: any, payload: object) => {
   let response = await context.effects.api.getMySpendingReport(payload);
 
@@ -108,8 +96,8 @@ export const setCloseReachedLimit = (context: any, close: boolean) => {
   context.state.closeReachedLimit = close;
 };
 
-export const getMyTransactions = async (context: any, payload: object) => {
-  let response = await context.effects.api.getMyTransactions(payload);
+export const getSpendingToday = async (context: any, payload: object) => {
+  let response = await context.effects.api.getSpendingToday(payload);
 
   let {
     data: {Success, Data},
@@ -118,24 +106,6 @@ export const getMyTransactions = async (context: any, payload: object) => {
   if (Success) {
     return Data;
   }
-};
-
-export const onCreateTransaction = async (context: any, payload: object) => {
-  let response = await context.effects.api.onCreateTransaction(payload);
-
-  return response;
-};
-
-export const onEditTransaction = async (context: any, payload: object) => {
-  let response = await context.effects.api.onEditTransaction(payload);
-
-  return response;
-};
-
-export const onDeleteTransaction = async (context: any, payload: object) => {
-  let response = await context.effects.api.onDeleteTransaction(payload);
-
-  return response;
 };
 
 export const getMyCategory = async (context: any) => {
@@ -164,6 +134,48 @@ export const onEditCategory = async (context: any, payload: object) => {
 
 export const onDeleteCategory = async (context: any, payload: object) => {
   let response = await context.effects.api.onDeleteCategory(payload);
+
+  return response;
+};
+
+export const getMyBalance = async (context: any, payload: object) => {
+  let response = await context.effects.api.getMyBalance(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
+};
+
+export const getMyTransactions = async (context: any, payload: object) => {
+  let response = await context.effects.api.getMyTransactions(payload);
+
+  let {
+    data: {Success, Data},
+  } = response;
+
+  if (Success) {
+    return Data;
+  }
+};
+
+export const onCreateTransaction = async (context: any, payload: object) => {
+  let response = await context.effects.api.onCreateTransaction(payload);
+
+  return response;
+};
+
+export const onEditTransaction = async (context: any, payload: object) => {
+  let response = await context.effects.api.onEditTransaction(payload);
+
+  return response;
+};
+
+export const onDeleteTransaction = async (context: any, payload: object) => {
+  let response = await context.effects.api.onDeleteTransaction(payload);
 
   return response;
 };
