@@ -37,24 +37,26 @@ export const screenStyles = StyleSheet.create({
   },
   modalCategoryContainer: {
     paddingTop: Mixins.scaleSize(14),
-    paddingHorizontal: Mixins.scaleSize(14),
-    height: '100%',
+    height: '85%',
   },
   modalTitleCategory: {
     fontSize: Mixins.scaleFont(16),
     fontWeight: 'bold',
     color: Colors.BLACK,
+    paddingHorizontal: Mixins.scaleSize(14),
     marginBottom: Mixins.scaleSize(20),
   },
   typeCategory: {
     fontSize: Mixins.scaleFont(12),
     fontWeight: 'bold',
+    paddingHorizontal: Mixins.scaleSize(14),
     marginBottom: Mixins.scaleSize(12),
   },
   rowCategory: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: Mixins.scaleSize(14),
     marginBottom: Mixins.scaleSize(16),
   },
   nameCategory: {

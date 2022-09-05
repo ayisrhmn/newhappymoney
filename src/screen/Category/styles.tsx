@@ -27,7 +27,7 @@ export const screenStyles = StyleSheet.create({
   },
   listSection: {
     backgroundColor: Colors.WHITE,
-    marginBottom: Mixins.scaleSize(64),
+    marginBottom: Mixins.scaleSize(60),
   },
   itemList: {
     paddingTop: Mixins.scaleSize(14),

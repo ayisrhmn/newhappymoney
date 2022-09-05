@@ -39,7 +39,7 @@ export const screenStyles = StyleSheet.create({
   },
   listSection: {
     backgroundColor: Colors.WHITE,
-    marginBottom: Mixins.scaleSize(110),
+    marginBottom: Mixins.scaleSize(100),
   },
   itemList: {
     paddingVertical: Mixins.scaleSize(8),
