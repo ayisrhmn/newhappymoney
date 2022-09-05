@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View, Keyboard} from 'react-native';
 import {Text} from 'react-native-paper';
 import {showMessage} from 'react-native-flash-message';
 import {useForm} from 'react-hook-form';
@@ -155,7 +155,10 @@ const CreateForm = (props: Props) => {
         type="button"
         label="Select category"
         value={ctSelected?.Name === undefined ? '' : ctSelected?.Name}
-        onPress={() => setOpenCategory(true)}
+        onPress={() => {
+          setOpenCategory(true);
+          Keyboard.dismiss();
+        }}
         error={errors.Category}
       />
       <Input
@@ -178,7 +181,10 @@ const CreateForm = (props: Props) => {
         type="button"
         label="Select date"
         value={displayDate}
-        onPress={() => setShowDatePicker(true)}
+        onPress={() => {
+          setShowDatePicker(true);
+          Keyboard.dismiss();
+        }}
         error={errors.TrDate}
       />
 
@@ -218,85 +224,84 @@ const ModalCategory = ({
       loading={false}
       showCloseButton={true}
       onClose={() => setOpenCategory(false)}
+      contentContainerStyle={screenStyles.modalCategoryContainer}
     >
-      <View style={screenStyles.modalCategoryContainer}>
-        <Text style={screenStyles.modalTitleCategory}>Select category</Text>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{marginBottom: Mixins.scaleSize(16)}}>
-            <Text style={{...screenStyles.typeCategory, color: Colors.SUCCESS}}>
-              Income
-            </Text>
-            {incomeCategory?.map((item: any, i: any) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setCtSelected(item);
-                  setValue('Category', item._id, {shouldValidate: true});
-                  setOpenCategory(false);
-                }}
-                key={i}
+      <Text style={screenStyles.modalTitleCategory}>Select category</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{marginBottom: Mixins.scaleSize(16)}}>
+          <Text style={{...screenStyles.typeCategory, color: Colors.SUCCESS}}>
+            Income
+          </Text>
+          {incomeCategory?.map((item: any, i: any) => (
+            <TouchableOpacity
+              onPress={() => {
+                setCtSelected(item);
+                setValue('Category', item._id, {shouldValidate: true});
+                setOpenCategory(false);
+              }}
+              key={i}
+            >
+              <View style={screenStyles.rowCategory}>
+                <Text style={screenStyles.nameCategory}>{item.Name}</Text>
+                {ctSelected?._id === item._id ? (
+                  <Icon
+                    name="checkmark-circle"
+                    color={Colors.PRIMARY}
+                    size={Mixins.scaleFont(20)}
+                  />
+                ) : (
+                  <Icon
+                    name="checkmark-circle-outline"
+                    color={Colors.GREY}
+                    size={Mixins.scaleFont(20)}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View>
+          <Text style={{...screenStyles.typeCategory, color: Colors.DANGER}}>
+            Expense
+          </Text>
+          {expenseCategory?.map((item: any, i: any) => (
+            <TouchableOpacity
+              onPress={() => {
+                setCtSelected(item);
+                setValue('Category', item._id, {shouldValidate: true});
+                setOpenCategory(false);
+              }}
+              key={i}
+            >
+              <View
+                style={
+                  i === expenseCategory.length - 1
+                    ? {
+                        ...screenStyles.rowCategory,
+                        marginBottom: Mixins.scaleSize(20),
+                      }
+                    : screenStyles.rowCategory
+                }
               >
-                <View style={screenStyles.rowCategory}>
-                  <Text style={screenStyles.nameCategory}>{item.Name}</Text>
-                  {ctSelected?._id === item._id ? (
-                    <Icon
-                      name="checkmark-circle"
-                      color={Colors.PRIMARY}
-                      size={Mixins.scaleFont(20)}
-                    />
-                  ) : (
-                    <Icon
-                      name="checkmark-circle-outline"
-                      color={Colors.GREY}
-                      size={Mixins.scaleFont(20)}
-                    />
-                  )}
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-          <View>
-            <Text style={{...screenStyles.typeCategory, color: Colors.DANGER}}>
-              Expense
-            </Text>
-            {expenseCategory?.map((item: any, i: any) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setCtSelected(item);
-                  setValue('Category', item._id, {shouldValidate: true});
-                  setOpenCategory(false);
-                }}
-                key={i}
-              >
-                <View
-                  style={
-                    i === expenseCategory.length - 1
-                      ? {
-                          ...screenStyles.rowCategory,
-                          marginBottom: Mixins.scaleSize(24),
-                        }
-                      : screenStyles.rowCategory
-                  }
-                >
-                  <Text style={screenStyles.nameCategory}>{item.Name}</Text>
-                  {ctSelected?._id === item._id ? (
-                    <Icon
-                      name="checkmark-circle"
-                      color={Colors.PRIMARY}
-                      size={Mixins.scaleFont(20)}
-                    />
-                  ) : (
-                    <Icon
-                      name="checkmark-circle-outline"
-                      color={Colors.GREY}
-                      size={Mixins.scaleFont(20)}
-                    />
-                  )}
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-      </View>
+                <Text style={screenStyles.nameCategory}>{item.Name}</Text>
+                {ctSelected?._id === item._id ? (
+                  <Icon
+                    name="checkmark-circle"
+                    color={Colors.PRIMARY}
+                    size={Mixins.scaleFont(20)}
+                  />
+                ) : (
+                  <Icon
+                    name="checkmark-circle-outline"
+                    color={Colors.GREY}
+                    size={Mixins.scaleFont(20)}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </Modal>
   );
 };
