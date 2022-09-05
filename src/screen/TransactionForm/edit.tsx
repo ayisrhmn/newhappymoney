@@ -258,7 +258,7 @@ const ModalCategory = ({
   setOpenCategory,
   setCtSelected,
   ctSelected,
-  setValue,
+  setCategory,
 }: any) => {
   const incomeCategory = category?.filter((o: any) => o.Type === 'Income');
   const expenseCategory = category?.filter((o: any) => o.Type === 'Expense');
@@ -281,7 +281,7 @@ const ModalCategory = ({
               <TouchableOpacity
                 onPress={() => {
                   setCtSelected(item);
-                  setValue('Category', item._id, {shouldValidate: true});
+                  setCategory(item._id);
                   setOpenCategory(false);
                 }}
                 key={i}
@@ -313,7 +313,7 @@ const ModalCategory = ({
               <TouchableOpacity
                 onPress={() => {
                   setCtSelected(item);
-                  setValue('Category', item._id, {shouldValidate: true});
+                  setCategory(item._id);
                   setOpenCategory(false);
                 }}
                 key={i}
