@@ -65,3 +65,7 @@ ___
 - State Management, Overmind.js
 - Date hack, moment.js
 - Async library, Axios.js
+
+## Author
+
+Muhammad Fariz Rahman
